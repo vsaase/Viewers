@@ -38,7 +38,7 @@ const _createToolButton = _createButton.bind(null, 'tool');
  */
 function _createWwwcPreset(preset, title, subtitle) {
   return {
-    id: preset,
+    id: preset.toString(),
     title,
     subtitle,
     type: 'action',

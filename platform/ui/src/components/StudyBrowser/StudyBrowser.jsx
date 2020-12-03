@@ -54,6 +54,7 @@ const StudyBrowser = ({
               onClick={() => {
                 onClickStudy(studyInstanceUid);
               }}
+              data-cy="thumbnail-list"
             />
             {isExpanded && displaySets && (
               <ThumbnailList

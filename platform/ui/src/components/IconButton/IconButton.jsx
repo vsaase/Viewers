@@ -136,7 +136,7 @@ IconButton.defaultProps = {
 
 IconButton.propTypes = {
   children: PropTypes.node.isRequired,
-  size: PropTypes.oneOf(['small', 'medium', 'large', 'initial']),
+  size: PropTypes.oneOf(['small', 'medium', 'large', 'initial', 'toolbar']),
   rounded: PropTypes.oneOf(['none', 'small', 'medium', 'large', 'full']),
   variant: PropTypes.oneOf(['text', 'outlined', 'contained']),
   color: PropTypes.oneOf([

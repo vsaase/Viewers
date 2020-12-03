@@ -102,7 +102,7 @@ export default class ExtensionManager {
         const [ohifExtension, configuration] = extension;
         this.registerExtension(ohifExtension, configuration, dataSources);
       } else {
-        this.registerExtension(extension, dataSources);
+        this.registerExtension(extension, {}, dataSources);
       }
     });
   };
@@ -171,6 +171,7 @@ export default class ExtensionManager {
             this._initCommandsModule(extensionModule);
             break;
           case MODULE_TYPES.DATA_SOURCE:
+            debugger;
             this._initDataSourcesModule(
               extensionModule,
               extensionId,
