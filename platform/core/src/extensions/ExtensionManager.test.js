@@ -1,4 +1,3 @@
-import { Exception } from 'handlebars';
 import ExtensionManager from './ExtensionManager.js';
 import MODULE_TYPES from './MODULE_TYPES.js';
 import log from './../log.js';
@@ -151,7 +150,7 @@ describe('ExtensionManager.js', () => {
       const extensionWithBadModule = {
         id: 'hello-world',
         getViewportModule: () => {
-          throw new Exception('Hello World');
+          throw new Error('Hello World');
         },
       };
 

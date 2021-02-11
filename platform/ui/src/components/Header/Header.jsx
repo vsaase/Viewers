@@ -10,6 +10,8 @@ function Header({ children, menuOptions, isReturnEnabled, isSticky }) {
   const { t } = useTranslation();
   const history = useHistory();
 
+  // TODO: this should be passed in as a prop instead and the react-router-dom
+  // dependency should be dropped
   const onReturnHandler = () => {
     if (isReturnEnabled) {
       history.push('/');

@@ -14,6 +14,7 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const NODE_ENV = process.env.NODE_ENV;
 const QUICK_BUILD = process.env.QUICK_BUILD;
 const BUILD_NUM = process.env.CIRCLE_BUILD_NUM || '0';
+const UnusedWebpackPlugin = require('unused-webpack-plugin');
 
 //
 dotenv.config();
@@ -98,6 +99,14 @@ module.exports = (env, argv, { SRC_DIR, DIST_DIR }) => {
         'process.env.LOCIZE_API_KEY': JSON.stringify(
           process.env.LOCIZE_API_KEY || ''
         ),
+      }),
+      new UnusedWebpackPlugin({
+        // Source directories
+        directories: [path.join(__dirname, 'src')],
+        // Exclude patterns
+        exclude: ['*.test.js'],
+        // Root directory (optional)
+        root: __dirname,
       }),
     ],
     // Fix: https://github.com/webpack-contrib/css-loader/issues/447#issuecomment-285598881

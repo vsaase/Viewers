@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { hotkeys } from '@ohif/core';
-import { Input } from '@ohif/ui';
+import Input from '../Input';
 
 import { getKeys, formatKeysForInput } from './utils';
 
