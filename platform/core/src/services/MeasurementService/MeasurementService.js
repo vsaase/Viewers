@@ -130,13 +130,11 @@ class MeasurementService {
    */
   createSource(name, version) {
     if (!name) {
-      log.warn('Source name not provided. Exiting early.');
-      return;
+      throw new Error('Source name not provided.');
     }
 
     if (!version) {
-      log.warn('Source version not provided. Exiting early.');
-      return;
+      throw new Error('Source version not provided.');
     }
 
     const id = guid();
@@ -205,23 +203,23 @@ class MeasurementService {
     toMeasurementSchema
   ) {
     if (!this._isValidSource(source)) {
-      log.warn('Invalid source. Exiting early.');
-      return;
+      throw new Error('Invalid source.');
     }
 
     if (!matchingCriteria) {
-      log.warn('Matching criteria not provided. Exiting early.');
-      return;
+      throw new Error('Matching criteria not provided.');
     }
 
     if (!definition) {
-      log.warn('Definition not provided. Exiting early.');
-      return;
+      throw new Error('Definition not provided.');
+    }
+
+    if (!toSourceSchema) {
+      throw new Error('Mapping function to source schema not provided.');
     }
 
     if (!toMeasurementSchema) {
-      log.warn('Measurement mapping function not provided. Exiting early.');
-      return;
+      throw new Error('Measurement mapping function not provided.');
     }
 
     const mapping = {
@@ -406,22 +404,19 @@ class MeasurementService {
    */
   addOrUpdate(source, definition, sourceMeasurement) {
     if (!this._isValidSource(source)) {
-      log.warn('Invalid source. Exiting early.');
-      return;
+      throw new Error('Invalid source.');
+    }
+
+    if (!definition) {
+      throw new Error('No source definition provided.');
     }
 
     const sourceInfo = this._getSourceInfo(source);
 
-    if (!definition) {
-      log.warn('No source definition provided. Exiting early.');
-      return;
-    }
-
     if (!this._sourceHasMappings(source)) {
-      log.warn(
+      throw new Error(
         `No measurement mappings found for '${sourceInfo}' source. Exiting early.`
       );
-      return;
     }
 
     let measurement = {};
@@ -437,24 +432,22 @@ class MeasurementService {
       /* Assign measurement source instance */
       measurement.source = source;
     } catch (error) {
-      log.warn(
+      throw new Error(
         `Failed to map '${sourceInfo}' measurement for definition ${definition}:`,
         error.message
       );
-      return;
     }
 
     if (!this._isValidMeasurement(measurement)) {
-      log.warn(
+      throw new Error(
         `Attempting to add or update a invalid measurement provided by '${sourceInfo}'. Exiting early.`
       );
-      return;
     }
 
     let internalId = sourceMeasurement.id;
     if (!internalId) {
       internalId = guid();
-      log.warn(`Measurement ID not found. Generating UID: ${internalId}`);
+      log.info(`Measurement ID not found. Generating UID: ${internalId}`);
     }
 
     const newMeasurement = {
@@ -475,7 +468,7 @@ class MeasurementService {
         notYetUpdatedAtSource: false,
       });
     } else {
-      log.info(`Measurement added.`, newMeasurement);
+      log.info('Measurement added.', newMeasurement);
       this.measurements[internalId] = newMeasurement;
       this._broadcastChange(this.EVENTS.MEASUREMENT_ADDED, {
         source,
