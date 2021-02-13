@@ -110,7 +110,7 @@ const StackManager = {
    */
   addStackUpdatedCallback(callback) {
     if (typeof callback !== 'function') {
-      throw new OHIFError('callback must be provided as a function');
+      throw new Error('callback must be provided as a function');
     }
     stackUpdatedCallbacks.push(callback);
   },

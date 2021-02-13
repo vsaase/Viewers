@@ -1,5 +1,4 @@
 import log from '../log';
-// import studies from '../studies';
 import utils from '../utils';
 // import {
 //   retrieveMeasurementFromSR,

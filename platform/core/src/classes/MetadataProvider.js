@@ -6,8 +6,6 @@ import fetchPaletteColorLookupTableData from '../utils/metadataProvider/fetchPal
 import fetchOverlayData from '../utils/metadataProvider/fetchOverlayData';
 import DicomMetadataStore from '../services/DicomMetadataStore';
 
-window.dcmjs = dcmjs;
-
 class MetadataProvider {
   constructor() {
     // Define the main "metadataLookup" private property as an immutable property.
