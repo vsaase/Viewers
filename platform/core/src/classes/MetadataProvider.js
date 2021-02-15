@@ -1,4 +1,3 @@
-import dcmjs from 'dcmjs';
 import queryString from 'query-string';
 import dicomParser from 'dicom-parser';
 import getPixelSpacingInformation from '../utils/metadataProvider/getPixelSpacingInformation';
@@ -424,6 +423,8 @@ class MetadataProvider {
         };
 
         break;
+      default:
+        return;
     }
 
     return metadata;

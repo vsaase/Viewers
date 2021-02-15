@@ -65,6 +65,8 @@ export default class ToolBarService {
             : !this.state.toggles[itemId];
         break;
       }
+      default:
+        throw new Error(`Invalid interaction type: ${interactionType}`);
     }
 
     // Run command if there's one associated

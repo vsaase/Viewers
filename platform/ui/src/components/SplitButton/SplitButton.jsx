@@ -83,7 +83,7 @@ const SplitButton = ({
   renderer,
   onInteraction,
 }) => {
-  const { primaryToolId, toggles, groups } = bState;
+  const { primaryToolId, toggles } = bState;
   /* Bubbles up individual item clicks */
   const getSplitButtonItems = items =>
     items.map((item, index) => ({
@@ -237,8 +237,6 @@ const DefaultListItemRenderer = ({ icon, label, isActive }) => (
     </span>
   </div>
 );
-
-const noop = () => {};
 
 SplitButton.defaultProps = {
   isRadio: false,

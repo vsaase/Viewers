@@ -27,6 +27,10 @@ import {
   UserPreferences,
 } from '@ohif/ui';
 
+import i18n from '@ohif/i18n';
+
+const { availableLanguages, defaultLanguage, currentLanguage } = i18n;
+
 const seriesInStudiesMap = new Map();
 
 /**
@@ -384,8 +388,12 @@ function WorkList({
             ),
             hotkeyDefinitions,
             onCancel: hide,
-            onSubmit: ({ hotkeyDefinitions }) => {
-              hotkeysManager.setHotkeys(hotkeyDefinitions);
+            currentLanguage: currentLanguage(),
+            availableLanguages,
+            defaultLanguage,
+            onSubmit: (state) => {
+              i18n.changeLanguage(state.language.value);
+              hotkeysManager.setHotkeys(state.hotkeyDefinitions);
               hide();
             },
             onReset: () => hotkeysManager.restoreDefaultBindings(),

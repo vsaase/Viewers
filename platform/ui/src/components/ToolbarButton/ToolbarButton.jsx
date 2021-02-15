@@ -18,7 +18,7 @@ const ToolbarButton = ({
   bState = {},
   //
 }) => {
-  const { primaryToolId, toggles, groups } = bState;
+  const { primaryToolId } = bState;
   const isActive = _isActive || (type === 'tool' && id === primaryToolId);
   const classes = {
     type: {

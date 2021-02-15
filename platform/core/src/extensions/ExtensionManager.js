@@ -171,7 +171,6 @@ export default class ExtensionManager {
             this._initCommandsModule(extensionModule);
             break;
           case MODULE_TYPES.DATA_SOURCE:
-            debugger;
             this._initDataSourcesModule(
               extensionModule,
               extensionId,
@@ -192,6 +191,8 @@ export default class ExtensionManager {
               ] = element;
             });
             break;
+          default:
+            throw new Error(`Module type invalid: ${moduleType}`);
         }
 
         this.modules[moduleType].push({

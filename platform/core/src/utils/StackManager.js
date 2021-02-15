@@ -1,5 +1,3 @@
-import OHIFError from '../classes/OHIFError.js';
-
 let stackMap = {};
 let configuration = {};
 const stackUpdatedCallbacks = [];
