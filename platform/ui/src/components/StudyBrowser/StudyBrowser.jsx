@@ -73,7 +73,7 @@ const StudyBrowser = ({
 
   return (
     <React.Fragment>
-      <div className="flex flex-row items-center justify-center h-16 p-4 border-b w-100 border-secondary-light bg-primary-dark">
+      <div className="flex flex-row items-center justify-center h-16 p-4 border-b w-100 border-secondary-light bg-primary-dark" data-cy={"studyBrowser-panel"}>
         <ButtonGroup
           variant="outlined"
           color="inherit"
