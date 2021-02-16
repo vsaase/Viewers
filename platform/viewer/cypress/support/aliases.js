@@ -1,16 +1,16 @@
 //Creating aliases for Cornerstone tools buttons
 export function initCornerstoneToolsAliases() {
-  cy.get('[data-cy="stack scroll"]').as('stackScrollBtn');
-  cy.get('[data-cy="zoom"]').as('zoomBtn');
-  cy.get('[data-cy="levels"]').as('levelsBtn');
-  cy.get('[data-cy="pan"]').as('panBtn');
-  cy.get('[data-cy="length"]').as('lengthBtn');
-  cy.get('[data-cy="annotate"]').as('annotateBtn');
-  cy.get('[data-cy="angle"]').as('angleBtn');
-  cy.get('[data-cy="reset"]').as('resetBtn');
-  cy.get('[data-cy="cine"]').as('cineBtn');
-  cy.get('[data-cy="more"]').as('moreBtn');
-  cy.get('[data-cy="layout"]').as('layoutBtn');
+  cy.get('[data-cy="StackScroll"]').as('stackScrollBtn');
+  cy.get('[data-cy="Zoom"]').as('zoomBtn');
+  cy.get('[data-cy="Levels"]').as('levelsBtn');
+  cy.get('[data-cy="Pan"]').as('panBtn');
+  cy.get('[data-cy="Length"]').as('lengthBtn');
+  cy.get('[data-cy="Annotate"]').as('annotateBtn');
+  cy.get('[data-cy="Angle"]').as('angleBtn');
+  cy.get('[data-cy="Reset"]').as('resetBtn');
+  cy.get('[data-cy="Cine"]').as('cineBtn');
+  cy.get('[data-cy="MoreTools-split-button-secondary"]').as('moreBtn');
+  cy.get('[data-cy="GridLayout"]').as('layoutBtn');
   cy.get('.viewport-element').as('viewport');
 }
 
@@ -18,17 +18,11 @@ export function initCornerstoneToolsAliases() {
 export function initCommonElementsAliases() {
   cy.get('[data-cy="trackedMeasurements-btn"]').as('measurementsBtn');
   cy.get('.viewport-element').as('viewport');
-  cy.get('section.sidepanel.from-right').as('measurementsPanel');
-  cy.get(
-    '.pull-left > .RoundedButtonGroup > .roundedButtonWrapper > .roundedButton'
-  ).as('seriesBtn');
-  cy.get('section.sidepanel.from-left').as('seriesPanel');
-  cy.get('div.ViewportOverlay > div.bottom-left.overlay-element > div').as(
-    'viewportInfoBottomLeft'
-  );
-  cy.get('div.ViewportOverlay > div.bottom-right.overlay-element > div').as(
-    'viewportInfoBottomRight'
-  );
+  cy.get('[data-cy="seriesList-btn"]').as('seriesBtn');
+
+  // TODO: Panels are not in DOM when closed, move this somewhere else
+  cy.get('[data-cy="trackedMeasurements-panel"]').as('measurementsPanel');
+  cy.get('[data-cy="studyBrowser-panel"]').as('seriesPanel');
   cy.get('.left-mid.orientation-marker').as('viewportInfoMidLeft');
   cy.get('.top-mid.orientation-marker').as('viewportInfoMidTop');
 }
@@ -38,18 +32,6 @@ export function initRouteAliases() {
   cy.server();
   cy.route('GET', '**/series**').as('getStudySeries');
   cy.route('GET', '**/studies**').as('getStudies');
-}
-
-//Creating aliases for VTK tools buttons
-export function initVTKToolsAliases() {
-  cy.get('[data-cy="exit 2d mpr"]').as('exit2dmprBtn');
-  cy.get('[data-cy="crosshairs"]').as('crosshairsBtn');
-  cy.get('[data-cy="wwwc"]').as('wwwcBtn');
-  cy.get('[data-cy="rotate"]').as('rotateBtn');
-  cy.get('.slab-thickness').as('slabSlider');
-  cy.get('.select-ohif').as('modeDropdown');
-  cy.get('.ohif-check-label').as('modeCheckbox');
-  cy.get('[data-cy="layout"]').as('layoutBtn');
 }
 
 //Creating aliases for Study List page elements on Desktop experience

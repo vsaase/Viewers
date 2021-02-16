@@ -22,7 +22,7 @@ function _createButton(type, id, icon, label, commandName, commandOptions) {
     label,
     type,
     commandName,
-    commandOptions,
+    commandOptions
   };
 }
 
@@ -44,6 +44,7 @@ function _createWwwcPreset(preset, title, subtitle) {
     type: 'action',
     commandName: 'setWindowLevel',
     commandOptions: windowLevelPresets[preset],
+    e2eTestSelectorName: `wwwc-preset-${preset.toString()}`
   };
 }
 
@@ -168,7 +169,7 @@ export default [
       isRadio: true, // ?
       groupId: 'MoreTools',
       primary: _createActionButton(
-        'reset',
+        'Reset',
         'tool-reset',
         'Reset View',
         'resetViewport'
@@ -181,7 +182,7 @@ export default [
       },
       items: [
         _createActionButton(
-          'reset',
+          'Reset',
           'tool-reset',
           'Reset View',
           'resetViewport'

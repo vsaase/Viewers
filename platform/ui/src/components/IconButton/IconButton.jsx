@@ -88,6 +88,8 @@ const IconButton = ({
   fullWidth,
   onClick,
   className,
+  name,
+  id,
   ...rest
 }) => {
   const buttonElement = useRef(null);
@@ -96,7 +98,6 @@ const IconButton = ({
     buttonElement.current.blur();
     onClick(e);
   };
-
   return (
     <button
       className={classnames(
@@ -114,6 +115,7 @@ const IconButton = ({
       ref={buttonElement}
       onClick={handleOnClick}
       type={type}
+      data-cy={id}
       {...rest}
     >
       {React.cloneElement(children, {
@@ -150,6 +152,7 @@ IconButton.propTypes = {
   fullWidth: PropTypes.bool,
   disabled: PropTypes.bool,
   type: PropTypes.string,
+  id: PropTypes.string,
   className: PropTypes.node,
   onClick: PropTypes.func,
 };

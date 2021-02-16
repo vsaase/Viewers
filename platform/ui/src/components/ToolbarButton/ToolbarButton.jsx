@@ -13,6 +13,7 @@ const ToolbarButton = ({
   commandOptions,
   onInteraction,
   dropdownContent,
+  e2eTestSelectorName,
   //
   isActive: _isActive,
   bState = {},
@@ -51,7 +52,9 @@ const ToolbarButton = ({
               commandOptions: commandOptions,
             });
           }}
+          name={label}
           key={id}
+          id={id}
         >
           <Icon name={icon} />
         </IconButton>
@@ -74,6 +77,7 @@ ToolbarButton.propTypes = {
   onInteraction: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  e2eTestSelectorName: PropTypes.string,
   /** Tooltip content can be replaced for a customized content by passing a node to this value. */
   dropdownContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };

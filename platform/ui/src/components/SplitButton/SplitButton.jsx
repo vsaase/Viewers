@@ -165,6 +165,7 @@ const SplitButton = ({
                 ...state,
                 primary: { isActive: isPrimaryActive },
               })}
+              data-cy={state.primary.id}
             >
               <Tooltip
                 isDisabled={!state.primary.tooltip}
@@ -196,6 +197,7 @@ const SplitButton = ({
                 primary: { isActive: isPrimaryActive },
               })}
               onClick={onSecondaryClickHandler}
+              data-cy={`${groupId}-split-button-secondary`}
             >
               <Tooltip
                 isDisabled={state.isExpanded || !secondary.tooltip}
@@ -237,6 +239,8 @@ const DefaultListItemRenderer = ({ icon, label, isActive }) => (
     </span>
   </div>
 );
+
+const noop = () => {};
 
 SplitButton.defaultProps = {
   isRadio: false,

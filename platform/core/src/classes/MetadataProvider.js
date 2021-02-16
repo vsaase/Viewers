@@ -440,8 +440,7 @@ class MetadataProvider {
         SeriesInstanceUID: splitImageId[2], // Note: splitImageId[3] === 'instances'
         SOPInstanceUID: splitImageId[4],
       };
-    }
-    if (imageId.includes('wado?requestType=WADO')) {
+    } else if (imageId.includes('?requestType=WADO')) {
       const qs = queryString.parse(imageId);
 
       return {
@@ -449,10 +448,10 @@ class MetadataProvider {
         SeriesInstanceUID: qs.seriesUID,
         SOPInstanceUID: qs.objectUID,
       };
-    } else {
-      // Maybe its a non-standard imageId
-      return this.imageIdToUIDs.get(imageId);
     }
+
+    // Maybe its a non-standard imageId
+    return this.imageIdToUIDs.get(imageId);
   }
 }
 

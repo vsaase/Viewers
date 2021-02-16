@@ -388,6 +388,7 @@ function TrackedCornerstoneViewport({
         <div className="absolute w-full">
           {viewportDialogState.viewportIndex === viewportIndex && (
             <Notification
+              id={viewportDialogState.id}
               message={viewportDialogState.message}
               type={viewportDialogState.type}
               actions={viewportDialogState.actions}

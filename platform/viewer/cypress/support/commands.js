@@ -107,18 +107,6 @@ Cypress.Commands.add('waitStudyList', () => {
   });
 });
 
-Cypress.Commands.add('waitVTKLoading', () => {
-  // Wait for start loading
-  cy.get('[data-cy="viewprt-grid"]', { timeout: 10000 }).should($grid => {
-    expect($grid).to.contain.text('Loading');
-  });
-
-  // Wait for finish loading
-  cy.get('[data-cy="viewprt-grid"]', { timeout: 30000 }).should($grid => {
-    expect($grid).not.to.contain.text('Loading');
-  });
-});
-
 Cypress.Commands.add('waitViewportImageLoading', () => {
   // Wait for finish loading
   cy.get('[data-cy="viewprt-grid"]', { timeout: 30000 }).should($grid => {
@@ -226,7 +214,7 @@ Cypress.Commands.add('waitDicomImage', (timeout = 50000) => {
 //Command to reset and clear all the changes made to the viewport
 Cypress.Commands.add('resetViewport', () => {
   //Click on More button
-  cy.get('[data-cy="more"]')
+  cy.get('[data-cy="MoreTools-split-button-secondary"]')
     .as('moreBtn')
     .click();
   //Verify if overlay is displayed
@@ -236,11 +224,12 @@ Cypress.Commands.add('resetViewport', () => {
     }
   });
   //Click on Clear button
-  cy.get('[data-cy="clear"]')
+  /*cy.get('[data-cy="clear"]')
     .as('clearBtn')
-    .click();
+    .click();*/
+
   //Click on Reset button
-  cy.get('[data-cy="reset"]')
+  cy.get('[data-cy="Reset"]')
     .as('resetBtn')
     .click();
 
@@ -284,36 +273,16 @@ Cypress.Commands.add('initRouteAliases', () => {
   initRouteAliases();
 });
 
-//Initialize aliases for VTK tools
-Cypress.Commands.add('initVTKToolsAliases', () => {
-  initVTKToolsAliases();
-});
-
 //Initialize aliases for Study List page elements
 Cypress.Commands.add('initStudyListAliasesOnDesktop', () => {
   initStudyListAliasesOnDesktop();
-});
-
-//Initialize aliases for Study List page elements
-Cypress.Commands.add('initStudyListAliasesOnTablet', () => {
-  initStudyListAliasesOnTablet();
-});
-
-//Initialize aliases for Study List page elements
-Cypress.Commands.add('initStudyListAliasesOnDesktop', () => {
-  initStudyListAliasesOnDesktop();
-});
-
-//Initialize aliases for Study List page elements
-Cypress.Commands.add('initStudyListAliasesOnTablet', () => {
-  initStudyListAliasesOnTablet();
 });
 
 //Add measurements in the viewport
 Cypress.Commands.add(
   'addLengthMeasurement',
   (firstClick = [150, 100], secondClick = [130, 170]) => {
-    cy.get('[data-cy="length"]').click();
+    cy.get('[data-cy="Length"]').click();
     cy.addLine('.viewport-element', firstClick, secondClick);
   }
 );
@@ -322,7 +291,7 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   'addAngleMeasurement',
   (initPos = [180, 390], midPos = [300, 410], finalPos = [180, 450]) => {
-    cy.get('[data-cy="angle"]').click();
+    cy.get('[data-cy="Angle"]').click();
     cy.addAngle('.viewport-element', initPos, midPos, finalPos);
   }
 );

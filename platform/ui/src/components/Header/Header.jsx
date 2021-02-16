@@ -37,7 +37,7 @@ function Header({ children, menuOptions, isReturnEnabled, isSticky }) {
           <span className="mr-3 text-lg text-common-light">
             {t('Header:INVESTIGATIONAL USE ONLY')}
           </span>
-          <Dropdown showDropdownIcon={false} list={menuOptions}>
+          <Dropdown id="options" showDropdownIcon={false} list={menuOptions}>
             <IconButton
               variant="text"
               color="inherit"

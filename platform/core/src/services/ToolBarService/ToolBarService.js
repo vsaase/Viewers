@@ -85,7 +85,7 @@ export default class ToolBarService {
       this.state.groups[groupId] = itemId;
     }
 
-    this._broadcastChange(this.EVENTS.TOOL_BAR_STATE_MODIFIED, {});
+    this._broadcastEvent(this.EVENTS.TOOL_BAR_STATE_MODIFIED, {});
   }
 
   getButtons() {
@@ -99,7 +99,7 @@ export default class ToolBarService {
   setButton(id, button) {
     if (this.buttons[id]) {
       this.buttons[id] = merge(this.buttons[id], button);
-      this._broadcastChange(this.EVENTS.TOOL_BAR_MODIFIED, {
+      this._broadcastEvent(this.EVENTS.TOOL_BAR_MODIFIED, {
         buttons: this.buttons,
         button: this.buttons[id],
         buttonSections: this.buttonSections,
@@ -109,7 +109,7 @@ export default class ToolBarService {
 
   setButtons(buttons) {
     this.buttons = buttons;
-    this._broadcastChange(this.EVENTS.TOOL_BAR_MODIFIED, {
+    this._broadcastEvent(this.EVENTS.TOOL_BAR_MODIFIED, {
       buttons: this.buttons,
       buttonSections: this.buttonSections,
     });
@@ -140,7 +140,7 @@ export default class ToolBarService {
     // Props check important for validation here...
 
     this.buttonSections[key] = buttons;
-    this._broadcastChange(this.EVENTS.TOOL_BAR_MODIFIED, {});
+    this._broadcastEvent(this.EVENTS.TOOL_BAR_MODIFIED, {});
   }
 
   /**
@@ -180,25 +180,8 @@ export default class ToolBarService {
       }
     });
 
-    this._broadcastChange(this.EVENTS.TOOL_BAR_MODIFIED, {});
+    this._broadcastEvent(this.EVENTS.TOOL_BAR_MODIFIED, {});
   }
-
-  /**
-   * Broadcasts toolbarService changes.
-   *
-   * @param {string} eventName The event name
-   * @return void
-   */
-  _broadcastChange = (eventName, callbackProps) => {
-    const hasListeners = Object.keys(this.listeners).length > 0;
-    const hasCallbacks = Array.isArray(this.listeners[eventName]);
-
-    if (hasListeners && hasCallbacks) {
-      this.listeners[eventName].forEach(listener => {
-        listener.callback(callbackProps);
-      });
-    }
-  };
 
   /**
    *

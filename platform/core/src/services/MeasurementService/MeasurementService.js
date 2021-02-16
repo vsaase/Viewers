@@ -295,7 +295,7 @@ class MeasurementService {
 
       this.measurements[id] = updatedMeasurement;
 
-      this._broadcastChange(
+      this._broadcastEvent(
         // Add an internal flag to say the measurement has not yet been updated at source.
         this.EVENTS.MEASUREMENT_UPDATED,
         {
@@ -378,14 +378,14 @@ class MeasurementService {
         newMeasurement
       );
       this.measurements[internalId] = newMeasurement;
-      this._broadcastChange(this.EVENTS.MEASUREMENT_UPDATED, {
+      this._broadcastEvent(this.EVENTS.MEASUREMENT_UPDATED, {
         source,
         measurement: newMeasurement,
       });
     } else {
       log.info(`Measurement added.`, newMeasurement);
       this.measurements[internalId] = newMeasurement;
-      this._broadcastChange(this.EVENTS.MEASUREMENT_ADDED, {
+      this._broadcastEvent(this.EVENTS.MEASUREMENT_ADDED, {
         source,
         measurement: newMeasurement,
       });
@@ -462,7 +462,7 @@ class MeasurementService {
         newMeasurement
       );
       this.measurements[internalId] = newMeasurement;
-      this._broadcastChange(this.EVENTS.MEASUREMENT_UPDATED, {
+      this._broadcastEvent(this.EVENTS.MEASUREMENT_UPDATED, {
         source,
         measurement: newMeasurement,
         notYetUpdatedAtSource: false,
@@ -470,7 +470,7 @@ class MeasurementService {
     } else {
       log.info('Measurement added.', newMeasurement);
       this.measurements[internalId] = newMeasurement;
-      this._broadcastChange(this.EVENTS.MEASUREMENT_ADDED, {
+      this._broadcastEvent(this.EVENTS.MEASUREMENT_ADDED, {
         source,
         measurement: newMeasurement,
       });
@@ -493,7 +493,7 @@ class MeasurementService {
     }
 
     delete this.measurements[id];
-    this._broadcastChange(this.EVENTS.MEASUREMENT_REMOVED, {
+    this._broadcastEvent(this.EVENTS.MEASUREMENT_REMOVED, {
       source,
       measurement: id, // This is weird :shrug:
     });
@@ -501,7 +501,7 @@ class MeasurementService {
 
   clearMeasurements() {
     this.measurements = {};
-    this._broadcastChange(this.EVENTS.MEASUREMENTS_CLEARED);
+    this._broadcastEvent(this.EVENTS.MEASUREMENTS_CLEARED);
   }
 
   jumpToMeasurement(viewportIndex, id) {
@@ -552,7 +552,7 @@ class MeasurementService {
    */
   clear() {
     this.measurements = {};
-    this._broadcastChange(this.EVENTS.MEASUREMENTS_CLEARED);
+    this._broadcastEvent(this.EVENTS.MEASUREMENTS_CLEARED);
   }
 
   /**
@@ -609,27 +609,6 @@ class MeasurementService {
     return (
       Array.isArray(this.mappings[source.id]) && this.mappings[source.id].length
     );
-  }
-
-  /**
-   * Broadcasts measurement changes.
-   *
-   * @param {string} eventName The event name.add
-   * @param {object} eventData.source The measurement source.
-   * @param {object} eventData.measurement The measurement.
-   * @param {boolean} eventData.notYetUpdatedAtSource True if the measurement was edited
-   *      within the measurement service and the source needs to update.
-   * @return void
-   */
-  _broadcastChange(eventName, eventData) {
-    const hasListeners = Object.keys(this.listeners).length > 0;
-    const hasCallbacks = Array.isArray(this.listeners[eventName]);
-
-    if (hasListeners && hasCallbacks) {
-      this.listeners[eventName].forEach(listener => {
-        listener.callback(eventData);
-      });
-    }
   }
 
   /**
