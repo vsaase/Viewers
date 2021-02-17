@@ -44,7 +44,6 @@ function _createWwwcPreset(preset, title, subtitle) {
     type: 'action',
     commandName: 'setWindowLevel',
     commandOptions: windowLevelPresets[preset],
-    e2eTestSelectorName: `wwwc-preset-${preset.toString()}`
   };
 }
 
@@ -112,6 +111,7 @@ export default [
     id: 'WindowLevel',
     type: 'ohif.splitButton',
     props: {
+      groupId: 'Wwwc',
       primary: _createToolButton(
         'Wwwc',
         'tool-window-level',

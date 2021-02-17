@@ -31,7 +31,7 @@ const classes = {
     classNames(
       baseClasses.Primary,
       primary.isActive && !isExpanded
-        ? 'bg-primary-light rounded-tr-md rounded-br-md'
+        ? 'bg-primary-light rounded-tr-md rounded-br-md active'
         : isExpanded
         ? 'bg-primary-dark'
         : 'bg-secondary-dark hover:bg-primary-dark'
@@ -165,7 +165,8 @@ const SplitButton = ({
                 ...state,
                 primary: { isActive: isPrimaryActive },
               })}
-              data-cy={state.primary.id}
+              data-tool={state.primary.id}
+              data-cy={`${groupId}-split-button-primary`}
             >
               <Tooltip
                 isDisabled={!state.primary.tooltip}
@@ -216,7 +217,10 @@ const SplitButton = ({
           </div>
         </div>
         {/* EXPANDED LIST OF OPTIONS */}
-        <div className={classes.Content({ ...state })}>
+        <div
+          className={classes.Content({ ...state })}
+          data-cy={`${groupId}-list-menu`}
+        >
           <ListMenu items={state.items} renderer={renderer} />
         </div>
       </div>

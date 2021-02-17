@@ -2,15 +2,15 @@
 export function initCornerstoneToolsAliases() {
   cy.get('[data-cy="StackScroll"]').as('stackScrollBtn');
   cy.get('[data-cy="Zoom"]').as('zoomBtn');
-  cy.get('[data-cy="Levels"]').as('levelsBtn');
+  cy.get('[data-cy="Wwwc-split-button-primary"]').as('wwwcBtnPrimary');
+  cy.get('[data-cy="Wwwc-split-button-secondary"]').as('wwwcBtnSecondary');
   cy.get('[data-cy="Pan"]').as('panBtn');
-  cy.get('[data-cy="Length"]').as('lengthBtn');
-  cy.get('[data-cy="Annotate"]').as('annotateBtn');
+  cy.get('[data-cy="MeasurementTools-split-button-primary"]').as('measurementToolsBtnPrimary');
+  cy.get('[data-cy="MeasurementTools-split-button-secondary"]').as('measurementToolsBtnSecondary');
   cy.get('[data-cy="Angle"]').as('angleBtn');
-  cy.get('[data-cy="Reset"]').as('resetBtn');
-  cy.get('[data-cy="Cine"]').as('cineBtn');
-  cy.get('[data-cy="MoreTools-split-button-secondary"]').as('moreBtn');
-  cy.get('[data-cy="GridLayout"]').as('layoutBtn');
+  cy.get('[data-cy="MoreTools-split-button-primary"]').as('moreBtnPrimary');
+  cy.get('[data-cy="MoreTools-split-button-secondary"]').as('moreBtnSecondary');
+  cy.get('[data-cy="Layout"]').as('layoutBtn');
   cy.get('.viewport-element').as('viewport');
 }
 
@@ -23,6 +23,11 @@ export function initCommonElementsAliases() {
   // TODO: Panels are not in DOM when closed, move this somewhere else
   cy.get('[data-cy="trackedMeasurements-panel"]').as('measurementsPanel');
   cy.get('[data-cy="studyBrowser-panel"]').as('seriesPanel');
+  cy.get('[data-cy="viewport-overlay-top-right"]').as('viewportInfoTopRight');
+  cy.get('[data-cy="viewport-overlay-top-left"]').as('viewportInfoTopLeft');
+  cy.get('[data-cy="viewport-overlay-bottom-right"]').as('viewportInfoBottomRight');
+  cy.get('[data-cy="viewport-overlay-bottom-left"]').as('viewportInfoBottomLeft');
+
   cy.get('.left-mid.orientation-marker').as('viewportInfoMidLeft');
   cy.get('.top-mid.orientation-marker').as('viewportInfoMidTop');
 }

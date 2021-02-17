@@ -173,7 +173,7 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('expectMinimumThumbnails', (seriesToWait = 1) => {
-  cy.get('[data-cy=thumbnail-list]', { timeout: 50000 }).should($itemList => {
+  cy.get('[data-cy="study-browser-thumbnail"]', { timeout: 50000 }).should($itemList => {
     expect($itemList.length >= seriesToWait).to.be.true;
   });
 });
@@ -214,26 +214,11 @@ Cypress.Commands.add('waitDicomImage', (timeout = 50000) => {
 //Command to reset and clear all the changes made to the viewport
 Cypress.Commands.add('resetViewport', () => {
   //Click on More button
-  cy.get('[data-cy="MoreTools-split-button-secondary"]')
+  cy.get('[data-cy="MoreTools-split-button-primary"]')
+    .should('have.attr', 'data-tool', 'Reset')
     .as('moreBtn')
-    .click();
-  //Verify if overlay is displayed
-  cy.get('body').then(body => {
-    if (body.find('.tooltip-toolbar-overlay').length == 0) {
-      cy.get('@moreBtn').click();
-    }
-  });
-  //Click on Clear button
-  /*cy.get('[data-cy="clear"]')
-    .as('clearBtn')
-    .click();*/
-
-  //Click on Reset button
-  cy.get('[data-cy="Reset"]')
-    .as('resetBtn')
-    .click();
-
-  cy.get('.tooltip-toolbar-overlay').should('not.exist');
+    .click()
+  ;
 });
 
 Cypress.Commands.add('imageZoomIn', () => {
@@ -249,7 +234,7 @@ Cypress.Commands.add('imageZoomIn', () => {
 
 Cypress.Commands.add('imageContrast', () => {
   cy.initCornerstoneToolsAliases();
-  cy.get('@levelsBtn').click();
+  cy.get('@wwwcBtnPrimary').click();
 
   //drags the mouse inside the viewport to be able to interact with series
   cy.get('@viewport')
@@ -282,7 +267,13 @@ Cypress.Commands.add('initStudyListAliasesOnDesktop', () => {
 Cypress.Commands.add(
   'addLengthMeasurement',
   (firstClick = [150, 100], secondClick = [130, 170]) => {
-    cy.get('[data-cy="Length"]').click();
+    cy.get('@measurementToolsBtnPrimary')
+      .should('have.attr', 'data-tool', 'Length')
+      .click()
+      .then($lengthBtn => {
+        cy.wrap($lengthBtn).should('have.class', 'active');
+      });
+
     cy.addLine('.viewport-element', firstClick, secondClick);
   }
 );

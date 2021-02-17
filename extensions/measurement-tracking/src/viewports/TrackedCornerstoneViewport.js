@@ -608,12 +608,12 @@ function _jumpToMeasurement(
     const scrollToHandler = evt => {
       scrollToIndex(targetElement, imageIndex);
       targetElement.removeEventListener(
-        'cornerstoneimagerendered',
+        cornerstone.EVENTS.IMAGE_RENDERED,
         scrollToHandler
       );
     };
     targetElement.addEventListener(
-      'cornerstoneimagerendered',
+      cornerstone.EVENTS.IMAGE_RENDERED,
       scrollToHandler
     );
 

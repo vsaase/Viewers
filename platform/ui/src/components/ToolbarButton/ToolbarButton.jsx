@@ -13,7 +13,6 @@ const ToolbarButton = ({
   commandOptions,
   onInteraction,
   dropdownContent,
-  e2eTestSelectorName,
   //
   isActive: _isActive,
   bState = {},
@@ -31,6 +30,8 @@ const ToolbarButton = ({
         : 'text-white hover:bg-secondary-dark hover:text-white focus:bg-secondary-dark focus:text-white',
     },
   };
+
+  const activeClass = isActive ? 'active' : '';
   const shouldShowDropdown = !!isActive && !!dropdownContent;
 
   return (
@@ -43,7 +44,7 @@ const ToolbarButton = ({
         <IconButton
           variant={isActive ? 'contained' : 'text'}
           size="toolbar"
-          className={classnames('mx-1', classes.type[type])}
+          className={classnames('mx-1', activeClass, classes.type[type])}
           onClick={() => {
             onInteraction({
               itemId: id,
@@ -77,7 +78,6 @@ ToolbarButton.propTypes = {
   onInteraction: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  e2eTestSelectorName: PropTypes.string,
   /** Tooltip content can be replaced for a customized content by passing a node to this value. */
   dropdownContent: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
 };

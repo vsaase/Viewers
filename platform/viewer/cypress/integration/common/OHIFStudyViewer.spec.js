@@ -3,9 +3,8 @@ describe('OHIF Study Viewer Page', function() {
     cy.checkStudyRouteInViewer(
       '1.2.840.113619.2.5.1762583153.215519.978957063.78'
     );
-    //
-    // cy.expectMinimumThumbnails(3);
-    //
+
+    cy.expectMinimumThumbnails(3);
   });
 
   beforeEach(function() {
@@ -53,12 +52,11 @@ describe('OHIF Study Viewer Page', function() {
   });
 
   it('checks if measurement item can be Relabeled under Measurements panel', function() {
-    cy.addLengthMeasurement(); //Adding measurement in the viewport
+    // Add length measurement
+    cy.addLengthMeasurement();
     cy.get('[data-cy="measurement-tracking-prompt-begin-tracking"]').should('exist')
     cy.get('[data-cy="measurement-tracking-prompt-begin-tracking"]').should('be.visible')
-
     cy.get('[data-cy="prompt-begin-tracking-yes"]').click();
-
     cy.get('.measurementItem').click();
 
     // Click "Relabel"

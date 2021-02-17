@@ -10,51 +10,36 @@ describe('OHIF Cornerstone Toolbar', () => {
     cy.initCornerstoneToolsAliases();
     cy.initCommonElementsAliases();
 
-    cy.get('[data-cy="thumbnail-list"]:nth-child(1)').click();
+    cy.get('[data-cy="study-browser-thumbnail"]').eq(1).click();
 
-    const expectedText = 'Ser: 1';
-    cy.get('@viewportInfoBottomLeft').should('contains.text', expectedText);
+    //const expectedText = 'Ser: 1';
+    //cy.get('@viewportInfoBottomLeft').should('contains.text', expectedText);
 
     cy.resetViewport();
   });
 
   it('checks if all primary buttons are being displayed', () => {
-    cy.get('@stackScrollBtn')
-      .should('be.visible')
-      .contains('Stack Scroll');
     cy.get('@zoomBtn')
-      .should('be.visible')
-      .contains('Zoom');
-    cy.get('@levelsBtn')
-      .should('be.visible')
-      .contains('Levels');
+      .should('be.visible');
+    cy.get('@wwwcBtnPrimary')
+      .should('be.visible');
+    cy.get('@wwwcBtnSecondary')
+      .should('be.visible');
     cy.get('@panBtn')
-      .should('be.visible')
-      .contains('Pan');
-    cy.get('@lengthBtn')
-      .should('be.visible')
-      .contains('Length');
-    cy.get('@annotateBtn')
-      .should('be.visible')
-      .contains('Annotate');
-    cy.get('@angleBtn')
-      .should('be.visible')
-      .contains('Angle');
-    cy.get('@resetBtn')
-      .should('be.visible')
-      .contains('Reset');
-    cy.get('@cineBtn')
-      .should('be.visible')
-      .contains('CINE');
-    cy.get('@moreBtn')
-      .should('be.visible')
-      .contains('More');
+      .should('be.visible');
+    cy.get('@measurementToolsBtnPrimary')
+      .should('be.visible');
+    cy.get('@measurementToolsBtnSecondary')
+      .should('be.visible');
+    cy.get('@moreBtnPrimary')
+      .should('be.visible');
+    cy.get('@moreBtnSecondary')
+      .should('be.visible');
     cy.get('@layoutBtn')
-      .should('be.visible')
-      .contains('Layout');
+      .should('be.visible');
   });
 
-  it('checks if Stack Scroll tool will navigate across all series in the viewport', () => {
+  /*it('checks if Stack Scroll tool will navigate across all series in the viewport', () => {
     //Click on button and verify if icon is active on toolbar
     cy.get('@stackScrollBtn')
       .click()
@@ -70,7 +55,7 @@ describe('OHIF Cornerstone Toolbar', () => {
     const expectedText =
       'Ser: 1Img: 1 1/26256 x 256Loc: -30.00 mm Thick: 5.00 mm';
     cy.get('@viewportInfoBottomLeft').should('have.text', expectedText);
-  });
+  });*/
 
   it('checks if Zoom tool will zoom in/out an image in the viewport', () => {
     //Click on button and verify if icon is active on toolbar
@@ -86,16 +71,16 @@ describe('OHIF Cornerstone Toolbar', () => {
       .trigger('mousemove', 'top', { which: 1 })
       .trigger('mouseup');
 
-    const expectedText = 'Zoom: 50%W: 958 L: 479Lossless / Uncompressed';
-    cy.get('@viewportInfoBottomRight').should('have.text', expectedText);
+    const expectedText = 'Zoom:0.45x';
+    cy.get('@viewportInfoTopLeft').should('have.text', expectedText);
   });
 
-  it('checks if Levels tool will change the contrast and brightness of an image in the viewport', () => {
+  it('checks if Levels tool will change the window width and center of an image', () => {
     //Click on button and verify if icon is active on toolbar
-    cy.get('@levelsBtn')
+    cy.get('@wwwcBtnPrimary')
       .click()
-      .then($levelsBtn => {
-        cy.wrap($levelsBtn).should('have.class', 'active');
+      .then($wwwcBtn => {
+        cy.wrap($wwwcBtn).should('have.class', 'active');
       });
 
     //drags the mouse inside the viewport to be able to interact with series
@@ -107,8 +92,8 @@ describe('OHIF Cornerstone Toolbar', () => {
       .trigger('mousemove', 'left', { which: 1 })
       .trigger('mouseup');
 
-    const expectedText = 'Zoom: 211%W: 635 L: 226Lossless / Uncompressed';
-    cy.get('@viewportInfoBottomRight').should('have.text', expectedText);
+    const expectedText = 'W:731L:226';
+    cy.get('@viewportInfoTopLeft').should('have.text', expectedText);
   });
 
   it('checks if Pan tool will move the image inside the viewport', () => {
@@ -125,39 +110,27 @@ describe('OHIF Cornerstone Toolbar', () => {
       .trigger('mouseup', 'bottom');
   });
 
-  it('checks if Length annotation can be added on viewport and on measurements panel', () => {
+  it('checks if Length annotation can be added to viewport and shows up in the measurements panel', () => {
     //Click on button and verify if icon is active on toolbar
-    cy.get('@lengthBtn')
-      .click()
-      .then($lengthbtn => {
-        cy.wrap($lengthbtn).should('have.class', 'active');
-      });
+    cy.addLengthMeasurement();
+    cy.get('[data-cy="measurement-tracking-prompt-begin-tracking"]').should('exist')
+    cy.get('[data-cy="measurement-tracking-prompt-begin-tracking"]').should('be.visible')
+    cy.get('[data-cy="prompt-begin-tracking-yes"]').click();
 
-    //Add annotation on the viewport
-    const firstClick = [150, 100];
-    const secondClick = [130, 170];
-    cy.addLine('@viewport', firstClick, secondClick);
+    //Verify the measurement exists in the table
+    cy.get('@measurementsPanel').should('be.visible');
 
-    //Verify if measurement annotation was added into the measurements panel
-    cy.get('@measurementsBtn')
-      .click()
-      .then($measurementsBtn => {
-        cy.get('@measurementsPanel').should('be.visible');
-
-        cy.get('.measurementItem')
-          .its('length')
-          .should('be.at.least', 1);
-
-        cy.wrap($measurementsBtn).click();
-      });
+    cy.get('[data-cy="measurement-item"]')
+      .its('length')
+      .should('be.at.least', 1);
   });
 
-  it('checks if Angle annotation can be added on viewport and on measurements panel', () => {
+  /*it('checks if angle annotation can be added on viewport without causing any errors', () => {
     //Click on button and verify if icon is active on toolbar
     cy.get('@angleBtn')
       .click()
       .then($angleBtn => {
-        cy.wrap($angleBtn).should('have.class', 'active');
+        cy.wrap($angleBtn).should('have.class', 'active'); // TODO: should we just add the 'active' class back? Or use a data property?
       });
 
     //Add annotation on the viewport
@@ -165,20 +138,7 @@ describe('OHIF Cornerstone Toolbar', () => {
     const midPos = [300, 410];
     const finalPos = [180, 450];
     cy.addAngle('@viewport', initPos, midPos, finalPos);
-
-    //Verify if measurement annotation was added into the measurements panel
-    cy.get('@measurementsBtn')
-      .click()
-      .then($measurementsBtn => {
-        cy.get('@measurementsPanel').should('be.visible');
-
-        cy.get('.measurementItem')
-          .its('length')
-          .should('be.at.least', 1);
-
-        cy.wrap($measurementsBtn).click();
-      });
-  });
+  });*/
 
   it('checks if Reset tool will reset all changes made on the image', () => {
     //Make some changes by zooming in and rotating the image
@@ -186,15 +146,15 @@ describe('OHIF Cornerstone Toolbar', () => {
     cy.imageContrast();
 
     //Click on reset button
-    cy.get('@resetBtn').click();
+    cy.resetViewport();
 
-    const expectedText = 'Zoom: 211%W: 958 L: 479Lossless / Uncompressed';
-    cy.get('@viewportInfoBottomRight').should('have.text', expectedText);
+    const expectedText = 'W:958L:479';
+    cy.get('@viewportInfoTopLeft').should('have.text', expectedText);
   });
 
-  it('checks if CINE tool will prompt a modal with working controls', () => {
+  /*it('checks if CINE tool will prompt a modal with working controls', () => {
     cy.server();
-    cy.route('GET', '/**/studies/**/').as('studies');
+    cy.route('GET', '/!**!/studies/!**!/').as('studies');
 
     //Click on button
     cy.get('@cineBtn').click();
@@ -263,45 +223,34 @@ describe('OHIF Cornerstone Toolbar', () => {
         // Verify that cine control overlay is hidden
         cy.get('@cineControls').should('not.exist');
       });
-  });
+  });*/
 
   it('checks if More button will prompt a modal with secondary tools', () => {
     //Click on More button
-    cy.get('@moreBtn').click();
+    cy.get('@moreBtnSecondary').click();
 
     //Verify if overlay is displayed
-    cy.get('.tooltip-toolbar-overlay')
+    cy.get('[data-cy="MoreTools-list-menu"]')
       .as('toolbarOverlay')
       .should('be.visible');
 
-    let iconName;
-    //Click on one of the secondary tools from the overlay
-    cy.get('[data-cy="magnify"]')
-      .click()
-      .then($magnifyBtn => {
-        cy.wrap($magnifyBtn)
-          .should('have.class', 'active')
-          .find('svg')
-          .then($icon => {
-            iconName = $icon.text();
-          });
-      });
+    // Click on one of the secondary tools from the overlay
+    cy.get('[data-cy="Magnify"]').click()
 
-    //Check if More button is active and if it has same icon as the secondary tool selected
-    cy.get('@moreBtn')
-      .click()
+    // Check if More button is active and if it has same icon as the secondary tool selected
+    cy.get('@moreBtnPrimary')
       .then($moreBtn => {
         cy.wrap($moreBtn)
           .should('have.class', 'active')
-          .contains(iconName);
+          .should('have.attr', 'data-tool', 'Magnify')
       });
 
-    //Verify if overlay is hidden
-    cy.get('@toolbarOverlay').should('not.exist');
+    // Verify if overlay is hidden
+    cy.get('@toolbarOverlay').should('not.be.visible');
   });
 
 
-  it('checks if Layout tool will multiply the number of viewports displayed', () => {
+  /*it('checks if Layout tool will multiply the number of viewports displayed', () => {
     //Click on Layout button and verify if overlay is displayed
     cy.get('@layoutBtn')
       .click()
@@ -407,7 +356,7 @@ describe('OHIF Cornerstone Toolbar', () => {
 
     //Verify if measurement annotation was added into the measurements panel
     cy.get('@measurementsBtn').click();
-    cy.get('.measurementItem')
+    cy.get('[data-cy="measurement-item"]')
       .its('length')
       .should('be.at.least', 2);
 
@@ -484,5 +433,5 @@ describe('OHIF Cornerstone Toolbar', () => {
     //Click on More button to close it
     cy.get('@moreBtn').click();
     cy.get('.tooltip-toolbar-overlay').should('not.exist');
-  });
+  });*/
 });
