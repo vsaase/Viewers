@@ -1,4 +1,4 @@
-describe('Visual Regression - OHIF Cornerstone Toolbar', () => {
+/*describe('Visual Regression - OHIF Cornerstone Toolbar', () => {
   before(() => {
     cy.checkStudyRouteInViewer(
       '1.2.840.113619.2.5.1762583153.215519.978957063.78'
@@ -82,4 +82,4 @@ describe('Visual Regression - OHIF Cornerstone Toolbar', () => {
     // Visual comparison
     cy.percyCanvasSnapshot('Flip V tool - Should Flip Image on X axis');
   });
-});
+});*/

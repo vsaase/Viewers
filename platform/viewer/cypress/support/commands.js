@@ -416,11 +416,11 @@ Cypress.Commands.add('openPreferences', () => {
   // Open User Preferences modal
   cy.get('body').then(body => {
     if (body.find('.OHIFModal').length === 0) {
-      cy.get('[data-cy="options-menu"]')
+      cy.get('[data-cy="options-chevron-down-icon"]')
         .scrollIntoView()
         .click()
         .then(() => {
-          cy.get('[data-cy="dd-item-menu"]')
+          cy.get('[data-cy="options-dropdown"]')
             .last()
             .click()
             .wait(200);
@@ -545,13 +545,8 @@ Cypress.Commands.add(
 
 Cypress.Commands.add('openDownloadImageModal', () => {
   // Click on More button
-  cy.get('[data-cy="more"]')
-    .as('moreBtn')
-    .click();
-
-  // Click on Download button
-  cy.get('[data-cy="download"]')
-    .as('downloadBtn')
+  cy.get('[data-cy="Capture"]')
+    .as('captureBtn')
     .click();
 });
 

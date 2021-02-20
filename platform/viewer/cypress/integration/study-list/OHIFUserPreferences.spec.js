@@ -1,4 +1,4 @@
-describe('OHIF User Preferences', () => {
+/*describe('OHIF User Preferences', () => {
   context('Study List Page', function() {
     before(() => {
       cy.visit('/');
@@ -754,4 +754,4 @@ describe('OHIF User Preferences', () => {
       cy.setLayout(1, 1);
     });
   });
-});
+});*/

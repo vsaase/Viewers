@@ -332,7 +332,7 @@ function WorkList({
           {appConfig.modes.map((mode, i) => {
             const isFirst = i === 0;
 
-            // TODO: Homes need a default/target route? We mostly support a single one for now.
+            // TODO: Modes need a default/target route? We mostly support a single one for now.
             // We should also be using the route path, but currently are not
             // mode.id
             // mode.routes[x].path
@@ -467,6 +467,18 @@ const defaultFilterValues = {
   resultsPerPage: 25,
 };
 
+function _tryParseInt(str, defaultValue) {
+  var retValue = defaultValue;
+  if (str !== null) {
+    if (str.length > 0) {
+      if (!isNaN(str)) {
+        retValue = parseInt(str);
+      }
+    }
+  }
+  return retValue;
+}
+
 function _getQueryFilterValues(query) {
   const queryFilterValues = {
     patientName: query.get('patientName'),
@@ -492,18 +504,6 @@ function _getQueryFilterValues(query) {
   );
 
   return queryFilterValues;
-
-  function _tryParseInt(str, defaultValue) {
-    var retValue = defaultValue;
-    if (str !== null) {
-      if (str.length > 0) {
-        if (!isNaN(str)) {
-          retValue = parseInt(str);
-        }
-      }
-    }
-    return retValue;
-  }
 }
 
 function _sortStringDates(s1, s2, sortModifier) {

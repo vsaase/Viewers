@@ -1,4 +1,4 @@
-describe('Visual Regression - OHIF Study Viewer Page', function() {
+/*describe('Visual Regression - OHIF Study Viewer Page', function() {
   before(() => {
     cy.checkStudyRouteInViewer(
       '1.2.840.113619.2.5.1762583153.215519.978957063.78'
@@ -33,4 +33,4 @@ describe('Visual Regression - OHIF Study Viewer Page', function() {
     cy.get('[data-cy="close-button"]').click();
     cy.get('@aboutOverlay').should('not.exist');
   });
-});
+});*/

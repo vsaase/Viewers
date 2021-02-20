@@ -191,4 +191,5 @@ function toSublist(value) {
  */
 
 const hierarchicalListUtils = { addToList, getItem, forEach, print };
+export { addToList, getItem, forEach, print };
 export default hierarchicalListUtils;

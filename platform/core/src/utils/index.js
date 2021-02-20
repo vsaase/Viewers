@@ -5,7 +5,7 @@ import guid from './guid';
 import sortBy from './sortBy.js';
 import sortBySeriesDate from './sortBySeriesDate.js';
 import writeScript from './writeScript.js';
-//import DicomLoaderService from './dicomLoaderService.js';
+import DicomLoaderService from './dicomLoaderService.js';
 import b64toBlob from './b64toBlob.js';
 //import loadAndCacheDerivedDisplaySets from './loadAndCacheDerivedDisplaySets.js';
 import urlUtil from './urlUtil';
@@ -35,7 +35,7 @@ const utils = {
   formatPN,
   b64toBlob,
   StackManager,
-  //DicomLoaderService,
+  DicomLoaderService,
   urlUtil,
   //loadAndCacheDerivedDisplaySets,
   makeDeferred,
@@ -58,7 +58,7 @@ export {
   writeScript,
   b64toBlob,
   StackManager,
-  //DicomLoaderService,
+  DicomLoaderService,
   urlUtil,
   //loadAndCacheDerivedDisplaySets,
   makeDeferred,

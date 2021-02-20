@@ -39,6 +39,7 @@ function Header({ children, menuOptions, isReturnEnabled, isSticky }) {
           </span>
           <Dropdown id="options" showDropdownIcon={false} list={menuOptions}>
             <IconButton
+              id={"options-settings-icon"}
               variant="text"
               color="inherit"
               size="initial"
@@ -47,6 +48,7 @@ function Header({ children, menuOptions, isReturnEnabled, isSticky }) {
               <Icon name="settings" />
             </IconButton>
             <IconButton
+              id={"options-chevron-down-icon"}
               variant="text"
               color="inherit"
               size="initial"

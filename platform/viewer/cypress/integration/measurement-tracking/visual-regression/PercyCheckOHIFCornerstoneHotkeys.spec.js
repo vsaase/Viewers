@@ -1,4 +1,4 @@
-describe('Visual Regression - OHIF Cornerstone Hotkeys', () => {
+/*describe('Visual Regression - OHIF Cornerstone Hotkeys', () => {
   before(() => {
     cy.checkStudyRouteInViewer(
       '1.2.840.113619.2.5.1762583153.215519.978957063.78'
@@ -31,4 +31,4 @@ describe('Visual Regression - OHIF Cornerstone Hotkeys', () => {
     cy.screenshot('Hotkey SPACEBAR - Should Reset Image');
     cy.percyCanvasSnapshot('Hotkey SPACEBAR - Should Reset Image');
   });
-});
+});*/

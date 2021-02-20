@@ -1,4 +1,4 @@
-describe('Visual Regression - OHIF Download Snapshot File', () => {
+/*describe('Visual Regression - OHIF Download Snapshot File', () => {
   before(() => {
     cy.checkStudyRouteInViewer(
       '1.2.840.113619.2.5.1762583153.215519.978957063.78'
@@ -15,13 +15,6 @@ describe('Visual Regression - OHIF Download Snapshot File', () => {
     cy.get('[data-cy="close-button"]')
       .scrollIntoView()
       .click();
-  });
-
-  it('checks displayed information for Tablet experience', function() {
-    // Set Tablet resolution
-    cy.viewport(1000, 660);
-    // Visual comparison
-    cy.percyCanvasSnapshot('Download Image Modal - Tablet experience');
   });
 
   it('checks displayed information for Desktop experience', function() {
@@ -48,4 +41,4 @@ describe('Visual Regression - OHIF Download Snapshot File', () => {
     // Visual comparison
     cy.percyCanvasSnapshot('Download Image Modal - Show Annotations checked');
   });
-});
+});*/

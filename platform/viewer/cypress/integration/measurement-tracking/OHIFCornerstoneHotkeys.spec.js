@@ -26,10 +26,10 @@ describe('OHIF Cornerstone Hotkeys', () => {
   it('checks if hotkeys "ArrowUp" and "ArrowDown" can navigate in the stack', () => {
     // Hotkey ArrowDown
     cy.get('body').type('{downarrow}');
-    cy.get('@viewportInfoBottomLeft').should('contains.text', 'Img: 2 2/26');
+    cy.get('@viewportInfoTopRight').should('contains.text', 'I:2 (2/26)');
     // Hotkey ArrowUp
     cy.get('body').type('{uparrow}');
-    cy.get('@viewportInfoBottomLeft').should('contains.text', 'Img: 1 1/26');
+    cy.get('@viewportInfoTopRight').should('contains.text', 'I:1 (1/26)');
   });
 
   it('checks if hotkeys "V" and "H" can flip the image', () => {
@@ -44,32 +44,48 @@ describe('OHIF Cornerstone Hotkeys', () => {
   });
 
   it('checks if hotkeys "+", "-" and "=" can zoom in, out and fit to viewport', () => {
+    //Click on button and verify if icon is active on toolbar
+    cy.get('@zoomBtn')
+      .click()
+      .then($zoomBtn => {
+        cy.wrap($zoomBtn).should('have.class', 'active');
+      });
+
     // Hotkey +
     cy.get('body').type('+++'); // Press hotkey 3 times
-    cy.get('@viewportInfoBottomRight').should('contains.text', 'Zoom: 256%');
+    cy.get('@viewportInfoTopLeft').should('contains.text', 'Zoom:2.35x');
     // Hotkey -
     cy.get('body').type('-');
-    cy.get('@viewportInfoBottomRight').should('contains.text', 'Zoom: 241%');
+    cy.get('@viewportInfoTopLeft').should('contains.text', 'Zoom:2.20x');
     // Hotkey =
     cy.get('body').type('=');
-    cy.get('@viewportInfoBottomRight').should('contains.text', 'Zoom: 211%');
+    cy.get('@viewportInfoTopLeft').should('contains.text', 'Zoom:1.90x');
   });
 
   it('checks if hotkey "SPACEBAR" can reset the image', () => {
+    //Click on button and verify if icon is active on toolbar
+    cy.get('@zoomBtn')
+      .click()
+      .then($zoomBtn => {
+        cy.wrap($zoomBtn).should('have.class', 'active');
+      });
+
     // Press multiples hotkeys
     cy.get('body').type('V+++I');
     cy.get('@viewportInfoMidLeft').should('contains.text', 'L');
     cy.get('@viewportInfoMidTop').should('contains.text', 'A');
-    cy.get('@viewportInfoBottomRight').should('contains.text', 'Zoom: 256%');
+    cy.get('@viewportInfoTopLeft').should('contains.text', 'Zoom:2.35x');
 
     // Hotkey SPACEBAR
     cy.get('body').type(' ');
     cy.get('@viewportInfoMidLeft').should('contains.text', 'R');
     cy.get('@viewportInfoMidTop').should('contains.text', 'A');
-    cy.get('@viewportInfoBottomRight').should('contains.text', 'Zoom: 211%');
+    cy.get('@viewportInfoTopLeft').should('contains.text', 'Zoom:1.90x');
   });
 
-  it('uses hotkeys "RightArrow" and "LeftArrow" to navigate between multiple viewports', () => {
+  /*
+  // TODO: Pretty sure this is not implemented yet
+  // it('uses hotkeys "RightArrow" and "LeftArrow" to navigate between multiple viewports', () => {
     //Select viewport layout (3,1)
     cy.setLayout(3, 1);
     cy.waitViewportImageLoading();
@@ -120,7 +136,7 @@ describe('OHIF Cornerstone Hotkeys', () => {
 
     //Select viewport layout (1,1)
     cy.setLayout(1, 1);
-  });
+  });*/
 
   //TO-DO: This test is blocked by issue #1095 (https://github.com/OHIF/Viewers/issues/1095)
   //Once issue is fixed, this test can be uncommented

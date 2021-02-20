@@ -6,7 +6,6 @@ describe('Top level exports', () => {
       'guid',
       'ObjectPath',
       'absoluteUrl',
-      'addServers',
       'sortBy',
       'sortBySeriesDate',
       'isLowPriorityModality',

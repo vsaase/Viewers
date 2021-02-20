@@ -41,27 +41,19 @@ export function initRouteAliases() {
 
 //Creating aliases for Study List page elements on Desktop experience
 export function initStudyListAliasesOnDesktop() {
-  cy.get('.study-count').as('studyCount');
-  cy.get('#filter-PatientName').as('PatientName');
-  cy.get('#filter-PatientID').as('MRN');
-  cy.get('#filter-AccessionNumber').as('AccessionNumber');
-  cy.get('#start-date').as('studyListStartDate');
-  cy.get('#end-date').as('studyListEndDate');
-  cy.get('#filter-modalities').as('modalities');
-  cy.get('#filter-StudyDescription').as('StudyDescription');
-  cy.get('[data-cy="study-list-results"] > tr').as('searchResult');
-}
+  cy.get('[data-cy="num-studies"]').as('numStudies');
+  cy.get('[data-cy="input-patientName"]').as('PatientName');
+  cy.get('[data-cy="input-mrn"]').as('MRN');
+  cy.get('[data-cy="input-accession"]').as('AccessionNumber');
+  cy.get('[data-cy="input-description"]').as('StudyDescription');
+  cy.get('[data-cy="study-list-results"]').as('searchResult');
+  cy.get('[data-cy="study-list-results"] > tr').as('searchResult2');
 
-//Creating aliases for Study List page elements on Tablet experience
-export function initStudyListAliasesOnTablet() {
-  cy.get('.study-count').as('studyCount');
-  cy.get('#filter-patientNameOrId').as('patientNameOrMRN');
-  cy.get('#filter-accessionOrModalityOrDescription').as(
-    'accessionModalityDescription'
-  );
-  cy.get('#start-date').as('studyListStartDate');
-  cy.get('#end-date').as('studyListEndDate');
-  cy.get('[data-cy="study-list-results"] > tr').as('searchResult');
+  // We can't use data attributes (e.g. data--cy) for these since
+  // they are using third party libraires (i.e. react-dates, react-select)
+  cy.get('#date-range-studyDate-start-date').as('studyListStartDate');
+  cy.get('#date-range-studyDate-end-date').as('studyListEndDate');
+  cy.get('#input-modalities').as('modalities');
 }
 
 //Creating aliases for User Preferences modal
