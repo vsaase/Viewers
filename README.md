@@ -10,7 +10,7 @@ $env:HTTP_PROXY = "http://www-int2.inet.dkfz-heidelberg.de:80"
 $env:FTP_PROXY = "http://www-int2.inet.dkfz-heidelberg.de:80"
 ```
 
-Then install node.js, yarn and Microsoft Build tools for node-gyp
+Then install node.js, yarn and Microsoft Build tools for node-gyp and follow the rest of the OHIF installation steps below
 
 
 <div align="center">
