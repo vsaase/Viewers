@@ -39,6 +39,16 @@ COPY package.json /usr/src/app/package.json
 COPY postcss.config.js /usr/src/app/postcss.config.js
 COPY yarn.lock /usr/src/app/yarn.lock
 
+# DKFZ requires global proxy settings for yarn
+RUN npm config set proxy http://www-int2.inet.dkfz-heidelberg.de
+RUN npm config set https-proxy http://www-int2.inet.dkfz-heidelberg.de
+RUN yarn config set httpProxy http://www-int2.inet.dkfz-heidelberg.de
+RUN yarn config set httpsProxy http://www-int2.inet.dkfz-heidelberg.de
+ENV HTTP_PROXY http://www-int2.inet.dkfz-heidelberg.de
+
+# Puppeteer only works without chromium for now
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD 1
+
 # Run the install before copying the rest of the files
 RUN yarn config set workspaces-experimental true
 RUN yarn install
@@ -50,16 +60,4 @@ ENV QUICK_BUILD true
 
 RUN yarn run build
 
-# Stage 2: Bundle the built application into a Docker container
-# which runs Nginx using Alpine Linux
-FROM nginx:1.15.5-alpine
-RUN apk add --no-cache bash
-RUN rm -rf /etc/nginx/conf.d
-COPY .docker/Viewer-v2.x /etc/nginx/conf.d
-COPY .docker/Viewer-v2.x/entrypoint.sh /usr/src/
-RUN chmod 777 /usr/src/entrypoint.sh
-COPY --from=builder /usr/src/app/platform/viewer/dist /usr/share/nginx/html
-EXPOSE 80
-EXPOSE 443
-ENTRYPOINT ["/usr/src/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["yarn", "run", "dev"]
