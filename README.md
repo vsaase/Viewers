@@ -1,7 +1,7 @@
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-Steps:
+Steps under Windows:
 
 Set environment variables for proxy
 ```
@@ -10,7 +10,13 @@ $env:HTTP_PROXY = "http://www-int2.inet.dkfz-heidelberg.de:80"
 $env:FTP_PROXY = "http://www-int2.inet.dkfz-heidelberg.de:80"
 ```
 
-Then install node.js, yarn and Microsoft Build tools for node-gyp and follow the rest of the OHIF installation steps below
+* install node.js
+* intall yarn: `npm install --global yarn`
+* install Microsoft Build tools: `npm install --global windows-build-tools`
+* `yarn config set workspaces-experimental true`
+* `yarn install`
+* `yarn start`
+
 
 
 <div align="center">
