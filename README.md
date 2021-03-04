@@ -3,7 +3,7 @@
 # Steps using Docker:
 * `sudo docker build --no-cache -t ohif --build-arg https_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" --build-arg http_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" .`
 * sudo docker run -p 3000:80 ohif
-* open localhost:3000 in the browser
+* make sure prodicomweb is running on localhost:8088 and then open localhost:3000 in the browser
 
 # Steps under Windows:
 
