@@ -1,7 +1,11 @@
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+# Steps using Docker:
+* `sudo docker build --no-cache -t ohif --build-arg https_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" --build-arg http_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" .`
+* sudo docker run -p 3000:80 ohif
+* make sure prodicomweb is running on localhost:8088 and then open localhost:3000 in the browser
 
-Steps:
+# Steps under Windows:
 
 Set environment variables for proxy
 ```
@@ -10,8 +14,29 @@ $env:HTTP_PROXY = "http://www-int2.inet.dkfz-heidelberg.de:80"
 $env:FTP_PROXY = "http://www-int2.inet.dkfz-heidelberg.de:80"
 ```
 
-Then install node.js, yarn and Microsoft Build tools for node-gyp
+* install python 2
+* install node.js
+* install yarn: `npm install --global yarn`
+* install Microsoft Build tools: `npm install --global windows-build-tools`
+* `yarn config set workspaces-experimental true`
+* `yarn install`
+* `yarn start`
 
+# Steps under Linux:
+
+* install python 2 : `sudo apt install python2`
+* install node version manager: https://github.com/nvm-sh/nvm and restart the shell
+* Set environment variables for proxy
+```
+export http_proxy=http://www-int2.inet.dkfz-heidelberg.de:80
+export https_proxy=http://www-int2.inet.dkfz-heidelberg.de:80
+```
+
+* `nvm install node`
+* `npm install -g yarn`
+* `yarn config set workspaces-experimental true`
+* `yarn install`
+* `yarn start`
 
 <div align="center">
   <h1>OHIF Medical Imaging Viewer</h1>
