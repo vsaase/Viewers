@@ -1,7 +1,9 @@
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 # Steps using Docker:
-`sudo docker build --build-arg https_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" --build-arg http_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" .`
+* `sudo docker build --no-cache -t ohif --build-arg https_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" --build-arg http_proxy="http://www-int2.inet.dkfz-heidelberg.de:80" .`
+* sudo docker run -p 3000:80 ohif
+* open localhost:3000 in the browser
 
 # Steps under Windows:
 
