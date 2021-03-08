@@ -14,24 +14,24 @@ const definitions =  [
     label: 'Segmentation',
     icon: 'ellipse-circle',
     buttons: [
-      {
-        id: 'Brush',
-        label: 'Brush',
-        icon: 'brush',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'Brush' },
-      },
-      {
-        id: 'SphericalBrush',
-        label: 'Spherical',
-        icon: 'sphere',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'SphericalBrush' },
-      },
+      // {
+      //   id: 'Brush',
+      //   label: 'Brush',
+      //   icon: 'brush',
+      //   //
+      //   type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+      //   commandName: 'setToolActive',
+      //   commandOptions: { toolName: 'Brush' },
+      // },
+      // {
+      //   id: 'SphericalBrush',
+      //   label: 'Spherical',
+      //   icon: 'sphere',
+      //   //
+      //   type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+      //   commandName: 'setToolActive',
+      //   commandOptions: { toolName: 'SphericalBrush' },
+      // },
       {
         id: 'CorrectionScissors',
         label: 'Correction Scissors',
@@ -41,15 +41,15 @@ const definitions =  [
         commandName: 'setToolActive',
         commandOptions: { toolName: 'CorrectionScissors' },
       },
-      {
-        id: 'BrushEraser',
-        label: 'Eraser',
-        icon: 'trash',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'BrushEraser' },
-      },
+      // {
+      //   id: 'BrushEraser',
+      //   label: 'Eraser',
+      //   icon: 'trash',
+      //   //
+      //   type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+      //   commandName: 'setToolActive',
+      //   commandOptions: { toolName: 'BrushEraser' },
+      // },
     ],
   },
 ];
