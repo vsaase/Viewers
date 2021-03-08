@@ -13,7 +13,7 @@ const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
 const PUBLIC_DIR = path.join(__dirname, '../public');
 // ~~ Env Vars
-const APP_CONFIG = process.env.APP_CONFIG || 'config/default.js';
+const APP_CONFIG = process.env.APP_CONFIG || (process.env.NODE_ENV == 'production' ? 'config/proxy.js' : 'config/default.js');
 const HTML_TEMPLATE = process.env.HTML_TEMPLATE || 'script-tag.html';
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
@@ -55,6 +55,9 @@ module.exports = (env, argv) => {
       }),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
+      }),
+      new webpack.DefinePlugin({
+        'DICOM_HOST': JSON.stringify(process.env.DICOM_HOST || 'http://localhost:9898/api')
       }),
     ],
   });
