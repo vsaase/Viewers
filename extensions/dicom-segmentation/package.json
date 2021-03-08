@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
+    "cornerstone-tools": "https://github.com/vsaase/cornerstoneTools#vsaase_segmentationlag",
     "gl-matrix": "^3.3.0",
     "react-select": "^3.0.8",
     "react-tooltip": "4.2.10"
