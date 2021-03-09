@@ -30,7 +30,7 @@
   "peerDependencies": {
     "@ohif/core": "^0.50.0",
     "cornerstone-core": "^2.2.8",
-    "cornerstone-tools": "https://github.com/vsaase/cornerstoneTools#vsaase_segmentationlag",
+    "cornerstone-tools": "https://github.com/vsaase/cornerstoneTools#91abaaa7c95d366460b678302f249d86b49f0eee",
     "dcmjs": "0.18.2",
     "prop-types": "^15.6.2",
     "react": "^16.8.6",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "cornerstone-tools": "https://github.com/vsaase/cornerstoneTools#vsaase_segmentationlag",
+    "cornerstone-tools": "https://github.com/vsaase/cornerstoneTools#91abaaa7c95d366460b678302f249d86b49f0eee",
     "gl-matrix": "^3.3.0",
     "react-select": "^3.0.8",
     "react-tooltip": "4.2.10"

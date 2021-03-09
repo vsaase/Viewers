@@ -6024,9 +6024,9 @@ cornerstone-math@^0.1.8:
   resolved "https://registry.yarnpkg.com/cornerstone-math/-/cornerstone-math-0.1.8.tgz#68ab1f9e4fdcd7c5cb23a0d2eb4263f9f894f1c5"
   integrity sha512-x7NEQHBtVG7j1yeyj/aRoKTpXv1Vh2/H9zNLMyqYJDtJkNng8C4Q8M3CgZ1qer0Yr7eVq2x+Ynmj6kfOm5jXKw==
 
-"cornerstone-tools@https://github.com/vsaase/cornerstoneTools#vsaase_segmentationlag":
+"cornerstone-tools@https://github.com/vsaase/cornerstoneTools#91abaaa7c95d366460b678302f249d86b49f0eee":
   version "4.0.1"
-  resolved "https://github.com/vsaase/cornerstoneTools#6563319f1dfca773a3934102883db937570c887b"
+  resolved "https://github.com/vsaase/cornerstoneTools#91abaaa7c95d366460b678302f249d86b49f0eee"
   dependencies:
     "@babel/runtime" "7.1.2"
     cornerstone-math "0.1.7"
