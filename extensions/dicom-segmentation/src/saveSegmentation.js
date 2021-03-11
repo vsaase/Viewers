@@ -33,16 +33,36 @@ export default async function saveSegmentation(element, labelmaps3D) {
       images = images.map(async image => ({ ...image, data: await getDataForImageID(image.imageId) }));
       return Promise.all(images);
     }).then(async images => {
-      const segBlob = generateSegmentation(
+      const dataset = generateSegmentation(
         images,
         labelmaps3D
       );
+      //const segBlob = datasetToBlob(dataset);
 
       //Create a URL for the binary.
-      var objectUrl = URL.createObjectURL(segBlob);
-      window.open(objectUrl);
+      // var objectUrl = URL.createObjectURL(segBlob);
+      // window.open(objectUrl);
+
+      const part10Buffer = datasetToDict(dataset).write()
+      const { baseurl } = parseImageId(images[0].imageId);
+      await stowDICOM(baseurl, part10Buffer);
     })
     .catch(err => console.log(err));
+
+}
+
+async function stowDICOM(url, part10Buffer) {
+  const config = {
+    url,
+    headers: DICOMWeb.getAuthorizationHeader(),
+    errorInterceptor: errorHandler.getHTTPErrorHandler(),
+  };
+  const dicomWeb = new api.DICOMwebClient(config);
+  const options = {
+    datasets: [part10Buffer],
+  };
+
+  await dicomWeb.storeInstances(options);
 }
 
 const wadorsRetriever = (
@@ -295,9 +315,8 @@ function fillSegmentation(segmentation, inputLabelmaps3D, userOptions = {}) {
       segmentation.bitPackPixelData();
   }
 
-  const segBlob = datasetToBlob(segmentation.dataset);
+  return segmentation.dataset;
 
-  return segBlob;
 }
 
 
