@@ -10,6 +10,7 @@ import DICOMSegTempCrosshairsTool from '../../tools/DICOMSegTempCrosshairsTool';
 
 import setActiveLabelmap from '../../utils/setActiveLabelMap';
 import refreshViewports from '../../utils/refreshViewports';
+import saveSegmentation from '../../saveSegmentation';
 
 import {
   BrushColorSelector,
@@ -598,6 +599,12 @@ const SegmentationPanel = ({
     i => i.value === state.selectedSegmentation
   );
 
+  const saveFunction = async event => {
+    const { labelmaps3D } = getBrushStackState();
+    const enabledElement = getEnabledElement();
+    saveSegmentation(enabledElement, labelmaps3D);
+  };
+
   if (state.showSettings) {
     return (
       <SegmentationSettings
@@ -656,11 +663,23 @@ const SegmentationPanel = ({
           <ScrollableArea>
             <TableList headless>{state.segmentList}</TableList>
           </ScrollableArea>
+        <div className="segmentationPanelFooter">
+          <button
+            onClick={saveFunction}
+            className="saveBtn"
+            data-cy="save-segmentations-btn"
+          >
+            <Icon name="save" width="14px" height="14px" />
+            Save segmentations
+          </button>
+        </div>
         </SegmentsSection>
       </div>
     );
   }
+
 };
+
 
 SegmentationPanel.propTypes = {
   /*
