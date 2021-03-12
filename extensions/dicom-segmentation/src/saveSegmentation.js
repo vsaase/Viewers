@@ -26,7 +26,6 @@ export default async function saveSegmentation(element, labelmaps3D) {
   for (let i = 0; i < imageIds.length; i++) {
     images.push(cornerstone.metaData.get("instance",imageIds[i]));
   }
-  console.log(images);
   const dataset = generateSegmentation(
     images,
     labelmaps3D
@@ -116,7 +115,6 @@ function parseImageId(imageId) {
 function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
   const multiframe = Normalizer.normalizeToDataset(images);
   const segmentation = new SegmentationDerivation([multiframe], userOptions);
-
   const options = Object.assign(
       {},
       generateSegmentationDefaultOptions,
@@ -140,8 +138,8 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
       const { labelmaps2D, metadata } = labelmap3D;
 
       const referencedFramesPerSegment = [];
-      for (let i = 1; i < metadata.data.length; i++) {
-          if (metadata.data[i]) {
+      for (let i = 1; i < metadata.length; i++) {
+          if (metadata[i]) {
               referencedFramesPerSegment[i] = [];
           }
       }
@@ -192,7 +190,7 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
                       return element + 1;
                   }
               );
-              const segmentMetadata = metadata.data[segmentIndex];
+              const segmentMetadata = metadata[segmentIndex];
               const labelmaps = _getLabelmapsFromRefernecedFrameIndicies(
                   labelmap3D,
                   referencedFrameIndicies

@@ -11,6 +11,7 @@ import DICOMSegTempCrosshairsTool from '../../tools/DICOMSegTempCrosshairsTool';
 import setActiveLabelmap from '../../utils/setActiveLabelMap';
 import refreshViewports from '../../utils/refreshViewports';
 import saveSegmentation from '../../saveSegmentation';
+import { createSegmentationMetadata } from '../../createSegmentation';
 
 import {
   BrushColorSelector,
@@ -445,7 +446,6 @@ const SegmentationPanel = ({
 
     const labelmap3D = getActiveLabelMaps3D();
     const colorLutTable = getColorLUTTable();
-    const hasLabelmapMeta = labelmap3D.metadata && labelmap3D.metadata.data;
 
     const segmentList = [];
     const segmentNumbers = [];
@@ -457,12 +457,12 @@ const SegmentationPanel = ({
       let segmentNumber = segmentIndex;
 
       /* Meta */
-      if (hasLabelmapMeta) {
-        const segmentMeta = labelmap3D.metadata.data[segmentIndex];
-        if (segmentMeta) {
-          segmentNumber = segmentMeta.SegmentNumber;
-          segmentLabel = segmentMeta.SegmentLabel;
-        }
+      const segmentMeta = labelmap3D.metadata[segmentIndex];
+      if (segmentMeta) {
+        segmentNumber = segmentMeta.SegmentNumber;
+        segmentLabel = segmentMeta.SegmentLabel;
+      } else {
+        labelmap3D.metadata[segmentNumber] = createSegmentationMetadata(segmentNumber, segmentLabel);
       }
 
       const sameSegment = state.selectedSegment === segmentNumber;
@@ -499,13 +499,7 @@ const SegmentationPanel = ({
 
   const relabelSegment = (segmentNumber, label) => {
     const labelmap3D = getActiveLabelMaps3D();
-    const hasLabelmapMeta = labelmap3D.metadata && labelmap3D.metadata.data;
-    if (hasLabelmapMeta) {
-      const segmentMeta = labelmap3D.metadata.data[segmentNumber];
-      if (segmentMeta) {
-        segmentMeta.SegmentLabel = label;
-      }
-    }
+    labelmap3D.metadata[segmentNumber].SegmentLabel = label;
   };
 
   const updateBrushSize = evt => {

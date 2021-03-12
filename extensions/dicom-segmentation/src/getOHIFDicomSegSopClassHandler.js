@@ -98,6 +98,7 @@ export default function getSopClassHandlerModule({ servicesManager }) {
             segmentsOnFrameArray,
           } = results;
 
+
           let labelmapIndex;
           if (labelmapBufferArray.length > 1) {
             let labelmapIndexes = [];
@@ -107,7 +108,7 @@ export default function getSopClassHandlerModule({ servicesManager }) {
                   imageIds,
                   segDisplaySet,
                   labelmapBufferArray[i],
-                  segMetadata,
+                  segMetadata.data, //see https://github.com/OHIF/Viewers/issues/2309
                   segmentsOnFrame,
                   segmentsOnFrameArray[i]
                 )
@@ -126,7 +127,7 @@ export default function getSopClassHandlerModule({ servicesManager }) {
               imageIds,
               segDisplaySet,
               labelmapBufferArray[0],
-              segMetadata,
+              segMetadata.data, //see https://github.com/OHIF/Viewers/issues/2309
               segmentsOnFrame,
               []
             );

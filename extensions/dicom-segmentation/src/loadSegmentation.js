@@ -91,7 +91,7 @@ function _makeColorLUTAndGetIndex(segMetadata) {
   const { colorLutTables } = state;
   const colorLUTIndex = _getNextColorLUTIndex();
 
-  const { data } = segMetadata;
+  const data = segMetadata;
 
   if (
     !data.some(
