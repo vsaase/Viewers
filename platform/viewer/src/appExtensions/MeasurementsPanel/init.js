@@ -18,6 +18,9 @@ const MEASUREMENT_ACTION_MAP = {
   modified: throttle(event => {
     return onModified(event);
   }, 300),
+  labelmapModified: (event) => {
+    console.log('onLabelmapModified not implemented, event:', event);
+  }
 };
 
 /**

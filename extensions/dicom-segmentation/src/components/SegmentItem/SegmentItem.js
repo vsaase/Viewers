@@ -22,6 +22,7 @@ const SegmentItem = ({
   index,
   label,
   onClick,
+  onRelabel,
   itemClass,
   color,
   visible,
@@ -34,6 +35,7 @@ const SegmentItem = ({
   }, [visible]);
 
   const onClickHandler = () => onClick(index);
+  const onRelableHandler = () => onRelabel(index, label + "I");
 
   const onVisibilityChangeHandler = event => {
     event.stopPropagation();
@@ -76,28 +78,26 @@ const SegmentItem = ({
             />
           </div>
           {false && <div className="segment-info">{'...'}</div>}
-          {false && (
-            <div className="segment-actions">
-              <button
-                className="btnAction"
-                onClick={() => console.log('Relabelling...')}
-              >
-                <span style={{ marginRight: '4px' }}>
-                  <Icon name="edit" width="14px" height="14px" />
-                </span>
-                Relabel
-              </button>
-              <button
-                className="btnAction"
-                onClick={() => console.log('Editing description...')}
-              >
-                <span style={{ marginRight: '4px' }}>
-                  <Icon name="edit" width="14px" height="14px" />
-                </span>
-                Description
-              </button>
-            </div>
-          )}
+          <div className="segment-actions">
+            <button
+              className="btnAction"
+              onClick={onRelableHandler}
+            >
+              <span style={{ marginRight: '4px' }}>
+                <Icon name="edit" width="14px" height="14px" />
+              </span>
+              Relabel
+            </button>
+            <button
+              className="btnAction"
+              onClick={() => console.log('Editing description...')}
+            >
+              <span style={{ marginRight: '4px' }}>
+                <Icon name="edit" width="14px" height="14px" />
+              </span>
+              Description
+            </button>
+          </div>
         </div>
       </TableListItem>
     </div>
@@ -108,6 +108,7 @@ SegmentItem.propTypes = {
   index: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  onRelabel: PropTypes.func,
   itemClass: PropTypes.string,
   color: PropTypes.array.isRequired,
 };
@@ -115,6 +116,7 @@ SegmentItem.propTypes = {
 SegmentItem.defaultProps = {
   itemClass: '',
   onClick: () => {},
+  onRelabel: () => console.log('Relabelling...'),
 };
 
 export default SegmentItem;

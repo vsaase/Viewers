@@ -22,32 +22,18 @@ export default async function saveSegmentation(element, labelmaps3D) {
   const stackToolState = cornerstoneTools.getToolState(element, "stack");
   const imageIds = stackToolState.data[0].imageIds;
 
-  let imagePromises = [];
+  let images = []
   for (let i = 0; i < imageIds.length; i++) {
-    imagePromises.push(cornerstone.loadImage(imageIds[i]));
+    images.push(cornerstone.metaData.get("instance",imageIds[i]));
   }
-
-  Promise.all(imagePromises)
-    .then(async images => {
-      //set the missing data property in all images
-      images = images.map(async image => ({ ...image, data: await getDataForImageID(image.imageId) }));
-      return Promise.all(images);
-    }).then(async images => {
-      const dataset = generateSegmentation(
-        images,
-        labelmaps3D
-      );
-      //const segBlob = datasetToBlob(dataset);
-
-      //Create a URL for the binary.
-      // var objectUrl = URL.createObjectURL(segBlob);
-      // window.open(objectUrl);
-
-      const part10Buffer = datasetToDict(dataset).write()
-      const { baseurl } = parseImageId(images[0].imageId);
-      await stowDICOM(baseurl, part10Buffer);
-    })
-    .catch(err => console.log(err));
+  console.log(images);
+  const dataset = generateSegmentation(
+    images,
+    labelmaps3D
+  );
+  const part10Buffer = datasetToDict(dataset).write()
+  const { baseurl } = parseImageId(imageIds[0]);
+  await stowDICOM(baseurl, part10Buffer);
 
 }
 
@@ -65,50 +51,6 @@ async function stowDICOM(url, part10Buffer) {
   await dicomWeb.storeInstances(options);
 }
 
-const wadorsRetriever = (
-  url,
-  studyInstanceUID,
-  seriesInstanceUID,
-  sopInstanceUID,
-  headers = DICOMWeb.getAuthorizationHeader(),
-  errorInterceptor = errorHandler.getHTTPErrorHandler()
-) => {
-  const config = {
-    url,
-    headers,
-    errorInterceptor,
-  };
-  const dicomWeb = new api.DICOMwebClient(config);
-
-  return dicomWeb.retrieveInstance({
-    studyInstanceUID,
-    seriesInstanceUID,
-    sopInstanceUID,
-  });
-};
-
-
-async function getDataForImageID(imageId) {
-  const {
-    scheme,
-    baseurl,
-    studyInstanceUID,
-    seriesInstanceUID,
-    sopInstanceUID,
-    frame,
-  } = parseImageId(imageId);
-  const arrayBuffer = await wadorsRetriever(
-    baseurl,
-    studyInstanceUID,
-    seriesInstanceUID,
-    sopInstanceUID
-  );
-
-  const byteArray = new Uint8Array(arrayBuffer);
-  //use dicomParser to get a dataset object
-  const dataset = dicomParser.parseDicom(byteArray, { untilTag: '' });
-  return dataset;
-}
 
 function parseImageId(imageId) {
   // wadors:http://localhost:8088/rs/studies/1.226/series/1.2.840.113654.2.70.1.17715843509433798103115064114496921292/instances/1.2.840.113654.2.70.1.92291956188888683087932898250107545898/frames/1
@@ -166,32 +108,15 @@ function parseImageId(imageId) {
 * generateSegmentation - Generates cornerstoneTools brush data, given a stack of
 * imageIds, images and the cornerstoneTools brushData.
 *
-* @param  {object[]} images An array of cornerstone images that contain the source
-*                           data under `image.data.byteArray.buffer`.
+* @param  {object[]} images An array of dcmjs naturalized datasets
 * @param  {Object|Object[]} inputLabelmaps3D The cornerstone `Labelmap3D` object, or an array of objects.
 * @param  {Object} userOptions Options to pass to the segmentation derivation and `fillSegmentation`.
 * @returns {Blob}
 */
 function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
-  const isMultiframe = images[0].imageId.includes("?frame");
-  const segmentation = _createSegFromImages(
-      images,
-      isMultiframe,
-      userOptions
-  );
+  const multiframe = Normalizer.normalizeToDataset(images);
+  const segmentation = new SegmentationDerivation([multiframe], userOptions);
 
-  return fillSegmentation(segmentation, inputLabelmaps3D, userOptions);
-}
-
-/**
-* fillSegmentation - Fills a derived segmentation dataset with cornerstoneTools `LabelMap3D` data.
-*
-* @param  {object[]} segmentation An empty segmentation derived dataset.
-* @param  {Object|Object[]} inputLabelmaps3D The cornerstone `Labelmap3D` object, or an array of objects.
-* @param  {Object} userOptions Options object to override default options.
-* @returns {Blob}           description
-*/
-function fillSegmentation(segmentation, inputLabelmaps3D, userOptions = {}) {
   const options = Object.assign(
       {},
       generateSegmentationDefaultOptions,
@@ -215,7 +140,6 @@ function fillSegmentation(segmentation, inputLabelmaps3D, userOptions = {}) {
       const { labelmaps2D, metadata } = labelmap3D;
 
       const referencedFramesPerSegment = [];
-
       for (let i = 1; i < metadata.data.length; i++) {
           if (metadata.data[i]) {
               referencedFramesPerSegment[i] = [];
@@ -319,47 +243,6 @@ function fillSegmentation(segmentation, inputLabelmaps3D, userOptions = {}) {
 
 }
 
-
-/**
- * _createSegFromImages - description
- *
- * @param  {Object[]} images    An array of the cornerstone image objects.
- * @param  {Boolean} isMultiframe Whether the images are multiframe.
- * @returns {Object}              The Seg derived dataSet.
- */
- function _createSegFromImages(images, isMultiframe, options) {
-  const datasets = [];
-
-  if (isMultiframe) {
-      const image = images[0];
-      const arrayBuffer = image.data.byteArray.buffer;
-
-      const dicomData = DicomMessage.readFile(arrayBuffer);
-      const dataset = DicomMetaDictionary.naturalizeDataset(dicomData.dict);
-
-      dataset._meta = DicomMetaDictionary.namifyDataset(dicomData.meta);
-
-      datasets.push(dataset);
-  } else {
-      for (let i = 0; i < images.length; i++) {
-          const image = images[i];
-          const arrayBuffer = image.data.byteArray.buffer;
-          const dicomData = DicomMessage.readFile(arrayBuffer);
-          const dataset = DicomMetaDictionary.naturalizeDataset(
-              dicomData.dict
-          );
-
-          dataset._meta = DicomMetaDictionary.namifyDataset(dicomData.meta);
-          datasets.push(dataset);
-      }
-  }
-
-  console.log("datasets"); console.log(datasets);
-  const multiframe = Normalizer.normalizeToDataset(datasets);
-  return new SegmentationDerivation([multiframe], options);
-}
-
-
 function _getLabelmapsFromRefernecedFrameIndicies(
   labelmap3D,
   referencedFrameIndicies
@@ -382,6 +265,7 @@ function datasetToDict(dataset) {
   fileMetaInformationVersionArray[1] = 1;
 
   const TransferSyntaxUID =
+      dataset._meta &&
       dataset._meta.TransferSyntaxUID &&
       dataset._meta.TransferSyntaxUID.Value &&
       dataset._meta.TransferSyntaxUID.Value[0]
@@ -404,13 +288,4 @@ function datasetToDict(dataset) {
   const dicomDict = new DicomDict(denaturalized);
   dicomDict.dict = DicomMetaDictionary.denaturalizeDataset(dataset);
   return dicomDict;
-}
-
-function datasetToBuffer(dataset) {
-  return Buffer.from(datasetToDict(dataset).write());
-}
-
-function datasetToBlob(dataset) {
-  const buffer = datasetToBuffer(dataset);
-  return new Blob([buffer], { type: "application/dicom" });
 }

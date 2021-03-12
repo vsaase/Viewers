@@ -473,6 +473,7 @@ const SegmentationPanel = ({
           key={segmentNumber}
           itemClass={`segment-item ${sameSegment && 'selected'}`}
           onClick={setCurrentSelectedSegment}
+          onRelabel={relabelSegment}
           label={segmentLabel}
           index={segmentNumber}
           color={color}
@@ -494,6 +495,17 @@ const SegmentationPanel = ({
      * If now, add "no-meta" class
      * Show default name
      */
+  };
+
+  const relabelSegment = (segmentNumber, label) => {
+    const labelmap3D = getActiveLabelMaps3D();
+    const hasLabelmapMeta = labelmap3D.metadata && labelmap3D.metadata.data;
+    if (hasLabelmapMeta) {
+      const segmentMeta = labelmap3D.metadata.data[segmentNumber];
+      if (segmentMeta) {
+        segmentMeta.SegmentLabel = label;
+      }
+    }
   };
 
   const updateBrushSize = evt => {
