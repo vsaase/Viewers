@@ -35,7 +35,10 @@ const SegmentItem = ({
   }, [visible]);
 
   const onClickHandler = () => onClick(index);
-  const onRelableHandler = () => onRelabel(index, label + "I");
+  const onRelableHandler = (event) => {
+    event.stopPropagation();
+    onRelabel(index, label + "I");
+  }
 
   const onVisibilityChangeHandler = event => {
     event.stopPropagation();

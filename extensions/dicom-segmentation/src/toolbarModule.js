@@ -15,6 +15,15 @@ const definitions =  [
     icon: 'ellipse-circle',
     buttons: [
       {
+        id: 'FreehandScissors',
+        label: 'Freehand',
+        icon: 'circle-notch',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'FreehandScissors' },
+      },
+      {
         id: 'Brush',
         label: 'Brush',
         icon: 'brush',
@@ -49,6 +58,15 @@ const definitions =  [
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
         commandOptions: { toolName: 'BrushEraser' },
+      },
+      {
+        id: 'FreehandScissorsEraser',
+        label: 'Scissors Eraser',
+        icon: 'scissors',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'FreehandScissorsEraser' },
       },
     ],
   },

@@ -199,7 +199,7 @@ const SegmentationPanel = ({
      */
     cornerstoneTools.store.state.enabledElements.forEach(enabledElement =>
       enabledElement.addEventListener(
-        'cornerstonetoolslabelmapmodified',
+        cornerstoneTools.EVENTS.LABELMAP_MODIFIED,
         labelmapModifiedHandler
       )
     );
@@ -211,7 +211,7 @@ const SegmentationPanel = ({
       );
       cornerstoneTools.store.state.enabledElements.forEach(enabledElement =>
         enabledElement.removeEventListener(
-          'cornerstonetoolslabelmapmodified',
+          cornerstoneTools.EVENTS.LABELMAP_MODIFIED,
           labelmapModifiedHandler
         )
       );
@@ -500,6 +500,7 @@ const SegmentationPanel = ({
   const relabelSegment = (segmentNumber, label) => {
     const labelmap3D = getActiveLabelMaps3D();
     labelmap3D.metadata[segmentNumber].SegmentLabel = label;
+    refreshSegmentations();
   };
 
   const updateBrushSize = evt => {
