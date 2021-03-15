@@ -15,7 +15,6 @@ import { Normalizer } from './normalizers'
 
 const { Segmentation } = dcmjs.derivations;
 const SegmentationDerivation = Segmentation;
-import { encode, decode} from 'dcmjs';
 
 export default async function saveSegmentation(element, labelmaps3D) {
 
@@ -98,10 +97,6 @@ function parseImageId(imageId) {
  *                                 seriesInstanceUid.
  */
 
- const generateSegmentationDefaultOptions = {
-  includeSliceSpacing: true,
-  rleEncode: false
-};
 
 /**
 * generateSegmentation - Generates cornerstoneTools brush data, given a stack of
@@ -115,12 +110,6 @@ function parseImageId(imageId) {
 function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
   const multiframe = Normalizer.normalizeToDataset(images);
   const segmentation = new SegmentationDerivation([multiframe], userOptions);
-  const options = Object.assign(
-      {},
-      generateSegmentationDefaultOptions,
-      userOptions
-  );
-
   // Use another variable so we don't redefine labelmaps3D.
   const labelmaps3D = Array.isArray(inputLabelmaps3D)
       ? inputLabelmaps3D
@@ -191,7 +180,7 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
                   }
               );
               const segmentMetadata = metadata[segmentIndex];
-              const labelmaps = _getLabelmapsFromRefernecedFrameIndicies(
+              const labelmaps = _getLabelmapsFromReferencedFrameIndicies(
                   labelmap3D,
                   referencedFrameIndicies
               );
@@ -206,42 +195,13 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
       }
   }
 
-  if (options.rleEncode) {
-      const rleEncodedFrames = encode(
-          segmentation.dataset.PixelData,
-          numberOfFrames,
-          segmentation.dataset.Rows,
-          segmentation.dataset.Columns
-      );
-
-      // Must use fractional now to RLE encode, as the DICOM standard only allows BitStored && BitsAllocated
-      // to be 1 for BINARY. This is not ideal and there should be a better format for compression in this manner
-      // added to the standard.
-      segmentation.assignToDataset({
-          BitsAllocated: "8",
-          BitsStored: "8",
-          HighBit: "7",
-          SegmentationType: "FRACTIONAL",
-          SegmentationFractionalType: "PROBABILITY",
-          MaximumFractionalValue: "255"
-      });
-
-      segmentation.dataset._meta.TransferSyntaxUID = {
-          Value: ["1.2.840.10008.1.2.5"],
-          vr: "UI"
-      };
-      segmentation.dataset._vrMap.PixelData = "OB";
-      segmentation.dataset.PixelData = rleEncodedFrames;
-  } else {
-      // If no rleEncoding, at least bitpack the data.
-      segmentation.bitPackPixelData();
-  }
+    segmentation.bitPackPixelData();
 
   return segmentation.dataset;
 
 }
 
-function _getLabelmapsFromRefernecedFrameIndicies(
+function _getLabelmapsFromReferencedFrameIndicies(
   labelmap3D,
   referencedFrameIndicies
 ) {

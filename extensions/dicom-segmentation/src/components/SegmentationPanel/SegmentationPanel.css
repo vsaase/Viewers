@@ -141,10 +141,14 @@
   outline: none;
   cursor: pointer;
 }
-/* &:hover, &:active
-    background-color: var(--ui-sky-blue)
 
-  svg
-    margin-right: 4px
-    position: relative
-    top: 2px */
+.saveBtn:hover,
+.saveBtn:active {
+  background-color: var(--ui-sky-blue);
+}
+
+.saveBtn svg {
+  margin-right: 4px;
+  position: relative;
+  top: 2px;
+}

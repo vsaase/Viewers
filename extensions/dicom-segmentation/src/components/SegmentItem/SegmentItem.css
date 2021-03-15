@@ -70,7 +70,7 @@
   text-overflow: ellipsis;
 }
 
-.dcmseg-segment-item .segment-label .eye-icon {
+.dcmseg-segment-item .segment-label .eye-icon .add-segment {
   cursor: pointer;
   color: var(--active-color);
 }

@@ -11,7 +11,7 @@ import DICOMSegTempCrosshairsTool from '../../tools/DICOMSegTempCrosshairsTool';
 import setActiveLabelmap from '../../utils/setActiveLabelMap';
 import refreshViewports from '../../utils/refreshViewports';
 import saveSegmentation from '../../saveSegmentation';
-import { createSegmentationMetadata } from '../../createSegmentation';
+//import { createSegmentationMetadata } from '../../createSegmentation';
 
 import {
   BrushColorSelector,
@@ -157,8 +157,9 @@ const SegmentationPanel = ({
 
     const brushStackState = getBrushStackState();
     brushStackState.activeLabelmapIndex = newLabelmapIndex;
-    setState(state => ({ ...state, selectedSegmentation }));
 
+    state.selectedSegmentation = selectedSegmentation;
+    refreshSegmentations();
     refreshViewports();
 
     return segmentIndex;
@@ -320,7 +321,8 @@ const SegmentationPanel = ({
 
     const sameSegment = state.selectedSegment === segmentNumber;
     if (!sameSegment) {
-      setState(state => ({ ...state, selectedSegment: segmentNumber }));
+      state.selectedSegment = segmentNumber;
+      refreshSegmentations();
     }
 
     const validIndexList = [];
@@ -461,8 +463,6 @@ const SegmentationPanel = ({
       if (segmentMeta) {
         segmentNumber = segmentMeta.SegmentNumber;
         segmentLabel = segmentMeta.SegmentLabel;
-      } else {
-        labelmap3D.metadata[segmentNumber] = createSegmentationMetadata(segmentNumber, segmentLabel);
       }
 
       const sameSegment = state.selectedSegment === segmentNumber;
@@ -473,7 +473,7 @@ const SegmentationPanel = ({
           key={segmentNumber}
           itemClass={`segment-item ${sameSegment && 'selected'}`}
           onClick={setCurrentSelectedSegment}
-          onRelabel={relabelSegment}
+          // onRelabel={relabelSegment}
           label={segmentLabel}
           index={segmentNumber}
           color={color}
@@ -497,11 +497,11 @@ const SegmentationPanel = ({
      */
   };
 
-  const relabelSegment = (segmentNumber, label) => {
-    const labelmap3D = getActiveLabelMaps3D();
-    labelmap3D.metadata[segmentNumber].SegmentLabel = label;
-    refreshSegmentations();
-  };
+  // const relabelSegment = (segmentNumber, label) => {
+  //   const labelmap3D = getActiveLabelMaps3D();
+  //   labelmap3D.metadata[segmentNumber].SegmentLabel = label;
+  //   refreshSegmentations();
+  // };
 
   const updateBrushSize = evt => {
     const updatedRadius = Number(evt.target.value);
@@ -612,6 +612,17 @@ const SegmentationPanel = ({
     saveSegmentation(enabledElement, labelmaps3D);
   };
 
+  // const onAddSegment = () => {
+  //   const activeSegmentIndex = setActiveSegment(getActiveSegmentIndex() + 1);
+  //   const labelmap3D = getActiveLabelMaps3D();
+  //   if (labelmap3D.metadata[activeSegmentIndex] === undefined) {
+  //     labelmap3D.metadata[activeSegmentIndex] = createSegmentationMetadata(activeSegmentIndex, "new segment");
+  //   }
+  //   console.log(activeSegmentIndex);
+  //   console.log(labelmap3D);
+  //   refreshSegmentations();
+  // };
+
   if (state.showSettings) {
     return (
       <SegmentationSettings
@@ -666,6 +677,7 @@ const SegmentationPanel = ({
             state.segmentNumbers.length
           }
           onVisibilityChange={onVisibilityChangeHandler}
+          // onAddSegment={onAddSegment}
         >
           <ScrollableArea>
             <TableList headless>{state.segmentList}</TableList>
@@ -746,6 +758,7 @@ const SegmentsSection = ({
   children,
   isVisible: defaultVisibility,
   onVisibilityChange,
+  // onAddSegment,
 }) => {
   const [isVisible, setIsVisible] = useState(defaultVisibility);
 
@@ -754,6 +767,10 @@ const SegmentsSection = ({
     setIsVisible(newVisibility);
     onVisibilityChange(newVisibility);
   };
+
+  // const onAddSegmentHandler = () => {
+  //   onAddSegment();
+  // }
 
   useEffect(() => {
     setIsVisible(defaultVisibility);
@@ -764,6 +781,13 @@ const SegmentsSection = ({
       <div className="header">
         <div>Segments</div>
         <div className="icons">
+          {false && <Icon
+            className={'add-segment'}
+            name={'plus'}
+            width="20px"
+            height="20px"
+            onClick={onAddSegmentHandler}
+          />}
           <Icon
             className={`eye-icon ${isVisible && 'expanded'}`}
             name={isVisible ? 'eye' : 'eye-closed'}
@@ -779,10 +803,9 @@ const SegmentsSection = ({
   );
 };
 
-const noop = () => {};
 
 SegmentsSection.defaultProps = {
-  onVisibilityChange: noop,
+  onVisibilityChange: () => {},
 };
 
 export default SegmentationPanel;
