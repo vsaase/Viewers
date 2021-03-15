@@ -21,9 +21,8 @@
 
 # Stage 1: Build the application
 # docker build -t ohif/viewer:latest .
-FROM node:10.16.3-slim as builder
+FROM dicom_viewer_base as builder
 
-RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy Files
@@ -38,25 +37,6 @@ COPY lerna.json /usr/src/app/lerna.json
 COPY package.json /usr/src/app/package.json
 COPY postcss.config.js /usr/src/app/postcss.config.js
 COPY yarn.lock /usr/src/app/yarn.lock
-
-# DKFZ requires global proxy settings for yarn
-RUN npm config set proxy http://www-int2.inet.dkfz-heidelberg.de
-RUN npm config set https-proxy http://www-int2.inet.dkfz-heidelberg.de
-RUN yarn config set httpProxy http://www-int2.inet.dkfz-heidelberg.de
-RUN yarn config set httpsProxy http://www-int2.inet.dkfz-heidelberg.de
-ENV HTTP_PROXY http://www-int2.inet.dkfz-heidelberg.de
-
-# Puppeteer only works without chromium for now
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD 1
-
-# Run the install before copying the rest of the files
-RUN yarn config set workspaces-experimental true
-RUN yarn install
-
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-ENV QUICK_BUILD true
-# ENV GENERATE_SOURCEMAP=false
-# ENV REACT_APP_CONFIG=config/default.js
 
 RUN yarn run build
 
