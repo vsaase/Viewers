@@ -40,11 +40,19 @@ COPY postcss.config.js /usr/src/app/postcss.config.js
 COPY yarn.lock /usr/src/app/yarn.lock
 
 # DKFZ requires global proxy settings for yarn
-RUN npm config set proxy http://www-int2.inet.dkfz-heidelberg.de
-RUN npm config set https-proxy http://www-int2.inet.dkfz-heidelberg.de
-RUN yarn config set httpProxy http://www-int2.inet.dkfz-heidelberg.de
-RUN yarn config set httpsProxy http://www-int2.inet.dkfz-heidelberg.de
-ENV HTTP_PROXY http://www-int2.inet.dkfz-heidelberg.de
+# RUN npm config set proxy http://www-int2.inet.dkfz-heidelberg.de && \
+#     npm config set https-proxy http://www-int2.inet.dkfz-heidelberg.de &&\
+#     yarn config set httpProxy http://www-int2.inet.dkfz-heidelberg.de && \
+#     yarn config set httpsProxy http://www-int2.inet.dkfz-heidelberg.de
+# ENV HTTP_PROXY http://www-int2.inet.dkfz-heidelberg.de
+# ENV HTTPS_PROXY http://www-int2.inet.dkfz-heidelberg.de
+# ENV http_proxy http://www-int2.inet.dkfz-heidelberg.de
+# ENV https_proxy http://www-int2.inet.dkfz-heidelberg.de
+
+# Yarn needs git as dependency
+RUN apt-get update && apt-get install -y git
+# RUN git config --global http.proxy http://www-int2.inet.dkfz-heidelberg.de:80
+# RUN git config --global https.proxy http://www-int2.inet.dkfz-heidelberg.de:80
 
 # Puppeteer only works without chromium for now
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD 1
@@ -53,11 +61,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD 1
 RUN yarn config set workspaces-experimental true
 RUN yarn install
 
+ENV APP_CONFIG config/proxy.js
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 ENV QUICK_BUILD true
 # ENV GENERATE_SOURCEMAP=false
 # ENV REACT_APP_CONFIG=config/default.js
-
-RUN yarn run build
-
-CMD ["yarn", "run", "dev"]
