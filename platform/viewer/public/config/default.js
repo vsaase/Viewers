@@ -19,7 +19,7 @@ window.config = {
           background: 'url(/assets/Deutsches_Krebsforschungszentrum_Logo.svg)',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
-          width: '200px',
+          width: '300px',
         },
       });
     },
