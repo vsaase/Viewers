@@ -137,6 +137,17 @@ class App extends Component {
 
     setConfiguration(this._appConfig);
 
+    const apiRoot = this._appConfig.servers.dicomWeb[0].apiRoot;
+    store.dispatch({type:"prodicomweb/LOADING_USER"});
+    fetch(apiRoot + "/getuser").then(response => response.json()).then(
+      user => {
+        store.dispatch({
+          type: "prodicomweb/USER_FOUND",
+          payload: user
+        });
+      }
+    );
+
     this.initUserManager(oidc);
     _initServices([
       UINotificationService,

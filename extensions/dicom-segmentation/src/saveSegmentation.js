@@ -51,7 +51,6 @@ async function stowDICOM(url, part10Buffer) {
 
 
 function parseImageId(imageId) {
-  // wadors:http://localhost:8088/rs/studies/1.226/series/1.2.840.113654.2.70.1.17715843509433798103115064114496921292/instances/1.2.840.113654.2.70.1.92291956188888683087932898250107545898/frames/1
   // build a url by parsing out the url scheme and frame index from the imageId
   const firstColonIndex = imageId.indexOf(':');
 

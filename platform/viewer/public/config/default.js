@@ -32,6 +32,7 @@ window.config = {
         wadoUriRoot: 'http://localhost/wadouri',
         qidoRoot: 'http://localhost/rs',
         wadoRoot: 'http://localhost/rs',
+        apiRoot: 'http://localhost/api',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
@@ -41,21 +42,21 @@ window.config = {
     ],
   },
 
-  oidc: [
-    {
-      // ~ REQUIRED
-      // Authorization Server URL
-      authority: 'http://localhost/auth/realms/ohif',
-      client_id: 'ohif-viewer',
-      redirect_uri: 'http://localhost/callback', // `OHIFStandaloneViewer.js`
-      // "Authorization Code Flow"
-      // Resource: https://medium.com/@darutk/diagrams-of-all-the-openid-connect-flows-6968e3990660
-      response_type: 'code',
-      scope: 'openid', // email profile openid
-      // ~ OPTIONAL
-      post_logout_redirect_uri: '/logout-redirect.html',
-    },
-  ],
+  // oidc: [
+  //   {
+  //     // ~ REQUIRED
+  //     // Authorization Server URL
+  //     authority: 'http://localhost/auth/realms/ohif',
+  //     client_id: 'ohif-viewer',
+  //     redirect_uri: 'http://localhost/callback', // `OHIFStandaloneViewer.js`
+  //     // "Authorization Code Flow"
+  //     // Resource: https://medium.com/@darutk/diagrams-of-all-the-openid-connect-flows-6968e3990660
+  //     response_type: 'code',
+  //     scope: 'openid', // email profile openid
+  //     // ~ OPTIONAL
+  //     post_logout_redirect_uri: '/logout-redirect.html',
+  //   },
+  // ],
 
   // Extensions should be able to suggest default values for these?
   // Or we can require that these be explicitly set

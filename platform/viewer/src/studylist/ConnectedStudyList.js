@@ -6,11 +6,22 @@ const isActive = a => a.active === true;
 
 const mapStateToProps = state => {
   const activeServer = state.servers.servers.find(isActive);
-
-  return {
-    server: activeServer,
-    user: state.oidc.user,
-  };
+  if(state.oidc.user) {
+    return {
+      server: activeServer,
+      user: state.oidc.user,
+    }
+  } else if(!state.prodicomweb.isLoadingUser) {
+    return {
+      server: activeServer,
+      user: state.prodicomweb.user,
+    }
+  }  else {
+    return {
+      server: activeServer,
+      user: {username: ""},
+    }
+  }
 };
 
 const ConnectedStudyList = connect(

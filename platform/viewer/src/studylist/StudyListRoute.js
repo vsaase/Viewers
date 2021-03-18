@@ -229,7 +229,7 @@ function StudyListRoute(props) {
       <div className="study-list-header">
         <div className="header">
           <h1 style={{ fontWeight: 300, fontSize: '22px' }}>
-            Logged in as {user.profile.preferred_username}
+            Logged in as {user.username}
           </h1>
         </div>
         <div className="actions">
