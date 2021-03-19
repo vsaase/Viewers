@@ -14,7 +14,6 @@ const { DicomMetaDictionary, DicomMessage, DicomDict } = dcmjs.data;
 import { Normalizer } from './normalizers'
 
 const { Segmentation } = dcmjs.derivations;
-const SegmentationDerivation = Segmentation;
 
 export default async function saveSegmentation(element, labelmaps3D) {
 
@@ -108,7 +107,7 @@ function parseImageId(imageId) {
 */
 function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
   const multiframe = Normalizer.normalizeToDataset(images);
-  const segmentation = new SegmentationDerivation([multiframe], userOptions);
+  const segmentation = new Segmentation([multiframe], userOptions);
   // Use another variable so we don't redefine labelmaps3D.
   const labelmaps3D = Array.isArray(inputLabelmaps3D)
       ? inputLabelmaps3D
@@ -140,7 +139,7 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
 
               segmentsOnLabelmap.forEach(segmentIndex => {
                   if (segmentIndex !== 0) {
-                      referencedFramesPerSegment[segmentIndex].push(i);
+                      referencedFramesPerSegment[segmentIndex].push(i+1);
                       numberOfFrames++;
                   }
               });
@@ -168,20 +167,15 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
           segmentIndex < referencedFramesPerSegment.length;
           segmentIndex++
       ) {
-          const referencedFrameIndicies =
+          const referencedFrameNumbers =
               referencedFramesPerSegment[segmentIndex];
 
-          if (referencedFrameIndicies) {
+          if (referencedFrameNumbers) {
               // Frame numbers start from 1.
-              const referencedFrameNumbers = referencedFrameIndicies.map(
-                  element => {
-                      return element + 1;
-                  }
-              );
               const segmentMetadata = metadata[segmentIndex];
-              const labelmaps = _getLabelmapsFromReferencedFrameIndicies(
+              const labelmaps = _getLabelmapsFromReferencedFrameNumbers(
                   labelmap3D,
-                  referencedFrameIndicies
+                  referencedFrameNumbers
               );
 
               segmentation.addSegmentFromLabelmap(
@@ -194,24 +188,24 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
       }
   }
 
-    segmentation.bitPackPixelData();
+  segmentation.bitPackPixelData();
 
   return segmentation.dataset;
 
 }
 
-function _getLabelmapsFromReferencedFrameIndicies(
+function _getLabelmapsFromReferencedFrameNumbers(
   labelmap3D,
-  referencedFrameIndicies
+  referencedFrameNumbers
 ) {
   const { labelmaps2D } = labelmap3D;
 
   const labelmaps = [];
 
-  for (let i = 0; i < referencedFrameIndicies.length; i++) {
-      const frame = referencedFrameIndicies[i];
+  for (let i = 0; i < referencedFrameNumbers.length; i++) {
+      const frame = referencedFrameNumbers[i];
 
-      labelmaps.push(labelmaps2D[frame].pixelData);
+      labelmaps.push(labelmaps2D[frame-1].pixelData);
   }
 
   return labelmaps;

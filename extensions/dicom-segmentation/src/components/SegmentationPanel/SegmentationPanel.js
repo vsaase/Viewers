@@ -331,12 +331,17 @@ const SegmentationPanel = ({
         validIndexList.push(index);
       }
     });
+    const segmentOnLabelmaps = validIndexList.length > 0;
 
-    const avg = array => array.reduce((a, b) => a + b) / array.length;
-    const average = avg(validIndexList);
-    const closest = validIndexList.reduce((prev, curr) => {
-      return Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev;
-    });
+    if (segmentOnLabelmaps) {
+      const avg = array => array.reduce((a, b) => a + b) / array.length;
+      const average = avg(validIndexList);
+      var closest = validIndexList.reduce((prev, curr) => {
+        return Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev;
+      });
+    } else {
+      var closest = 0;
+    }
 
     if (isCornerstone()) {
       const element = getEnabledElement();
@@ -357,7 +362,9 @@ const SegmentationPanel = ({
         imageId
       );
 
-      DICOMSegTempCrosshairsTool.addCrosshair(element, imageId, segmentNumber);
+      if (segmentOnLabelmaps) {
+        DICOMSegTempCrosshairsTool.addCrosshair(element, imageId, segmentNumber);
+      }
 
       onSegmentItemClick({
         StudyInstanceUID,
@@ -424,13 +431,13 @@ const SegmentationPanel = ({
     }
   };
 
-  const getSegmentList = () => {
+  const getSegmentList = (skipEmpty=false) => {
     /*
      * Newly created segments have no `meta`
      * So we instead build a list of all segment indexes in use
      * Then find any associated metadata
      */
-    const uniqueSegmentIndexes = getActiveLabelMaps2D()
+    let uniqueSegmentIndexes = getActiveLabelMaps2D()
       .reduce((acc, labelmap2D) => {
         if (labelmap2D) {
           const segmentIndexes = labelmap2D.segmentsOnLabelmap;
@@ -447,6 +454,16 @@ const SegmentationPanel = ({
       .sort((a, b) => a - b);
 
     const labelmap3D = getActiveLabelMaps3D();
+
+    if(!skipEmpty) {
+      uniqueSegmentIndexes = [];
+      for (let i = 0; i < labelmap3D.metadata.length; i++) {
+        if (labelmap3D.metadata[i]) {
+          uniqueSegmentIndexes.push(i);
+        }
+      }
+    }
+
     const colorLutTable = getColorLUTTable();
 
     const segmentList = [];
@@ -607,9 +624,9 @@ const SegmentationPanel = ({
   );
 
   const saveFunction = async event => {
-    const { labelmaps3D } = getBrushStackState();
+    const labelmap3D = getActiveLabelMaps3D();
     const enabledElement = getEnabledElement();
-    saveSegmentation(enabledElement, labelmaps3D);
+    saveSegmentation(enabledElement, labelmap3D);
   };
 
   // const onAddSegment = () => {
@@ -686,10 +703,10 @@ const SegmentationPanel = ({
           <button
             onClick={saveFunction}
             className="saveBtn"
-            data-cy="save-segmentations-btn"
+            data-cy="save-segmentation-btn"
           >
             <Icon name="save" width="14px" height="14px" />
-            Save segmentations
+            Save segmentation
           </button>
         </div>
         </SegmentsSection>
