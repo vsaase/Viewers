@@ -292,7 +292,7 @@ const SegmentationPanel = ({
       /* Map to display representation */
       const dateStr = `${SeriesDate}:${SeriesTime}`.split('.')[0];
       const date = moment(dateStr, 'YYYYMMDD:HHmmss');
-      const displayDate = date.format('ddd, MMM Do YYYY');
+      const displayDate = date.format('ddd, MMM Do YYYY HH:mm');
       const displayDescription = displaySet.SeriesDescription;
 
       return {
