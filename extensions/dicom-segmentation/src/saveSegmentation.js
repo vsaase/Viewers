@@ -15,7 +15,7 @@ import { Normalizer } from './normalizers'
 
 const { Segmentation } = dcmjs.derivations;
 
-export default async function saveSegmentation(element, labelmaps3D, onSegmentationSaved) {
+export default async function saveSegmentation(element, labelmaps3D, userOptions, onSegmentationSaved) {
 
   const stackToolState = cornerstoneTools.getToolState(element, "stack");
   const imageIds = stackToolState.data[0].imageIds;
@@ -26,7 +26,8 @@ export default async function saveSegmentation(element, labelmaps3D, onSegmentat
   }
   const dataset = generateSegmentation(
     images,
-    labelmaps3D
+    labelmaps3D,
+    userOptions
   );
   const part10Buffer = datasetToDict(dataset).write()
   const { baseurl } = parseImageId(imageIds[0]);
