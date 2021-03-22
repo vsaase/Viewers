@@ -28,7 +28,6 @@ window.config = {
   servers: {
     dicomWeb: [
       {
-        // name: 'DCM4CHEE',
         // wadoUriRoot: 'http://localhost/wadouri',
         // qidoRoot: 'http://localhost/rs',
         // wadoRoot: 'http://localhost/rs',

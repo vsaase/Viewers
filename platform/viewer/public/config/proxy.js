@@ -27,9 +27,14 @@ window.config = {
     dicomWeb: [
       {
         name: 'DCM4CHEE',
-        wadoUriRoot: `${window.origin}/api/wadouri`,
-        qidoRoot: `${window.origin}/api/rs`,
-        wadoRoot: `${window.origin}/api/rs`,
+        wadoUriRoot: `${window.origin}/wadouri`,
+        qidoRoot: `${window.origin}/rs`,
+        wadoRoot: `${window.origin}/rs`,
+        apiRoot: `${window.origin}/api`,
+        // wadoUriRoot: `http://localhost:8088/wadouri`,
+        // qidoRoot: `http://localhost:8088/rs`,
+        // wadoRoot: `http://localhost:8088/rs`,
+        // apiRoot: `http://localhost:8088/api`,
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
