@@ -65,6 +65,16 @@ export default {
         commandsManager.runCommand('requestNewSegmentation');
       };
 
+      const onSegmentationSavedHandler = () => {
+        UINotificationService.show({
+          title: 'DICOM Segmentation',
+          message: "Segmentation saved",
+          type: 'success',
+          autoClose: true,
+        });
+
+      };
+
       return (
         <SegmentationPanel
           {...props}
@@ -75,6 +85,7 @@ export default {
           onConfigurationChange={onConfigurationChangeHandler}
           onSelectedSegmentationChange={onSelectedSegmentationChangeHandler}
           onDisplaySetLoadFailure={onDisplaySetLoadFailureHandler}
+          onSegmentationSaved={onSegmentationSavedHandler}
         />
       );
     };

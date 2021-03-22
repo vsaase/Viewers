@@ -50,6 +50,7 @@ const SegmentationPanel = ({
   onConfigurationChange,
   onDisplaySetLoadFailure,
   onSelectedSegmentationChange,
+  onSegmentationSaved,
   activeContexts = [],
   contexts = {},
 }) => {
@@ -626,7 +627,7 @@ const SegmentationPanel = ({
   const saveFunction = async event => {
     const labelmap3D = getActiveLabelMaps3D();
     const enabledElement = getEnabledElement();
-    saveSegmentation(enabledElement, labelmap3D);
+    saveSegmentation(enabledElement, labelmap3D, onSegmentationSaved);
   };
 
   // const onAddSegment = () => {

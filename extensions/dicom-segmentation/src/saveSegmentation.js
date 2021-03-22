@@ -15,7 +15,7 @@ import { Normalizer } from './normalizers'
 
 const { Segmentation } = dcmjs.derivations;
 
-export default async function saveSegmentation(element, labelmaps3D) {
+export default async function saveSegmentation(element, labelmaps3D, onSegmentationSaved) {
 
   const stackToolState = cornerstoneTools.getToolState(element, "stack");
   const imageIds = stackToolState.data[0].imageIds;
@@ -31,7 +31,7 @@ export default async function saveSegmentation(element, labelmaps3D) {
   const part10Buffer = datasetToDict(dataset).write()
   const { baseurl } = parseImageId(imageIds[0]);
   await stowDICOM(baseurl, part10Buffer);
-
+  onSegmentationSaved();
 }
 
 async function stowDICOM(url, part10Buffer) {
