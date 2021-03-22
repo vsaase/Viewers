@@ -2,7 +2,7 @@ import React from 'react';
 import init from './init.js';
 import toolbarModule from './toolbarModule.js';
 import getSopClassHandlerModule from './getOHIFDicomSegSopClassHandler.js';
-import SegmentationPanel from './components/SegmentationPanel/SegmentationPanel.js';
+import ConnectedSegmentationPanel from './components/SegmentationPanel/ConnectedSegmentationPanel.js';
 import { version } from '../package.json';
 
 export default {
@@ -76,7 +76,7 @@ export default {
       };
 
       return (
-        <SegmentationPanel
+        <ConnectedSegmentationPanel
           {...props}
           activeContexts={activeContexts}
           contexts={api.contexts}

@@ -28,25 +28,27 @@ window.config = {
   servers: {
     dicomWeb: [
       {
-        // wadoUriRoot: 'http://localhost/wadouri',
-        // qidoRoot: 'http://localhost/rs',
-        // wadoRoot: 'http://localhost/rs',
-        // apiRoot: 'http://localhost/api',
-        // qidoSupportsIncludeField: true,
-        // imageRendering: 'wadors',
-        // thumbnailRendering: 'wadors',
-        // enableStudyLazyLoad: true,
-        // supportsFuzzyMatching: true,
-
-
         name: 'DCM4CHEE',
-        wadoUriRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/wado',
-        qidoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
-        wadoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+        wadoUriRoot: 'http://localhost/wadouri',
+        qidoRoot: 'http://localhost/rs',
+        wadoRoot: 'http://localhost/rs',
+        upsRoot: 'http://localhost/rs',
+        apiRoot: 'http://localhost/api',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
         enableStudyLazyLoad: true,
+        supportsFuzzyMatching: true,
+
+
+        // name: 'DCM4CHEE',
+        // wadoUriRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/wado',
+        // qidoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+        // wadoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+        // qidoSupportsIncludeField: true,
+        // imageRendering: 'wadors',
+        // thumbnailRendering: 'wadors',
+        // enableStudyLazyLoad: true,
       },
     ],
   },

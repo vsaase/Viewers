@@ -28,7 +28,13 @@ module.exports = {
     production: {
       presets: [
         // WebPack handles ES6 --> Target Syntax
-        ['@babel/preset-env', { modules: false }],
+        ['@babel/preset-env',
+          { modules: false,
+            "targets": {
+            "esmodules": true
+                    }
+            }
+        ],
         '@babel/preset-react',
       ],
       ignore: ['**/*.test.jsx', '**/*.test.js', '__snapshots__', '__tests__'],
@@ -36,10 +42,16 @@ module.exports = {
     development: {
       presets: [
         // WebPack handles ES6 --> Target Syntax
-        ['@babel/preset-env', { modules: false }],
+        ['@babel/preset-env',
+          { modules: false,
+            "targets": {
+            "esmodules": true
+                    }
+            }
+        ],
         '@babel/preset-react',
       ],
-      plugins: ['react-hot-loader/babel'],
+      plugins: ['react-hot-loader/babel',"@babel/plugin-proposal-class-properties"],
       ignore: ['**/*.test.jsx', '**/*.test.js', '__snapshots__', '__tests__'],
     },
   },
