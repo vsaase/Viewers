@@ -32,6 +32,7 @@ window.config = {
         wadoUriRoot: 'http://localhost/wadouri',
         qidoRoot: 'http://localhost/rs',
         wadoRoot: 'http://localhost/rs',
+        upsRoot: 'http://localhost/rs',
         apiRoot: 'http://localhost/api',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',

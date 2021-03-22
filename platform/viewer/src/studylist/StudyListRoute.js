@@ -48,6 +48,7 @@ function StudyListRoute(props) {
     allFields: '',
   });
   const [studies, setStudies] = useState([]);
+  const [workitems, setWorkitems] = useState([]);
   const [searchStatus, setSearchStatus] = useState({
     isSearchingForStudies: false,
     error: null,
@@ -78,6 +79,20 @@ function StudyListRoute(props) {
     setActiveModalId('DicomStorePicker');
   }
 
+  useEffect(
+    () => {
+      const fetchWorkitems = async () => {
+        fetch(server.qidoRoot + "/workitems").then(response => response.json()).then(
+          workitems => {
+            setWorkitems(workitems);
+            setStudies(workitems);
+          }
+        );
+      };
+      fetchWorkitems();
+    }, []
+  )
+
   // Called when relevant state/props are updated
   // Watches filters and sort, debounced
   useEffect(
@@ -95,7 +110,11 @@ function StudyListRoute(props) {
             displaySize
           );
 
-          setStudies(response);
+          if (response.length > 0){
+            setStudies(response);
+          } else {
+            setStudies(workitems);
+          }
           setSearchStatus({ error: null, isSearchingForStudies: false });
         } catch (error) {
           console.warn(error);
@@ -233,9 +252,10 @@ function StudyListRoute(props) {
           </h1>
         </div>
         <div className="actions">
-          <span className="study-count">no segmentations to do</span>
+          <span className="study-count">{workitems.length} segmentations to do</span>
         </div>
       </div>
+
       <div className="study-list-header">
         <div className="header">
           <h1 style={{ fontWeight: 300, fontSize: '22px' }}>
