@@ -629,8 +629,10 @@ const SegmentationPanel = ({
     const labelmap3D = getActiveLabelMaps3D();
     const enabledElement = getEnabledElement();
     const { StudyInstanceUID, displaySetInstanceUID } = getActiveViewport();
+    const SeriesDescription = selectedSegmentationOption.title;
+
     const userOptions = {
-      "SeriesDescription": selectedSegmentationOption.title + " " + user.username
+      "SeriesDescription": SeriesDescription.endsWith(user.username) ? SeriesDescription : SeriesDescription + " " + user.username
     }
     saveSegmentation(enabledElement, labelmap3D, userOptions, onSegmentationSaved);
   };
