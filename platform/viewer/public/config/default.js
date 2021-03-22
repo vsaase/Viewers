@@ -29,11 +29,11 @@ window.config = {
     dicomWeb: [
       {
         name: 'DCM4CHEE',
-        wadoUriRoot: 'http://localhost/wadouri',
-        qidoRoot: 'http://localhost/rs',
-        wadoRoot: 'http://localhost/rs',
-        upsRoot: 'http://localhost/rs',
-        apiRoot: 'http://localhost/api',
+        wadoUriRoot: `${window.origin}/wadouri`,
+        qidoRoot: `${window.origin}/rs`,
+        wadoRoot: `${window.origin}/rs`,
+        upsRoot: `${window.origin}/rs`,
+        apiRoot: `${window.origin}/api`,
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
