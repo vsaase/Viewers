@@ -79,21 +79,16 @@ function StudyListRoute(props) {
     setActiveModalId('DicomStorePicker');
   }
 
-  useEffect(
-    () => {
-      const fetchWorkitems = async () => {
-        fetch(server.qidoRoot + "/workitems").then(response => response.json()).then(
-          workitems => {
-            setWorkitems(workitems);
-            setStudies(workitems);
-          }
-        ).catch((error) => {
-          window.location.href = '/api/login';
-        });
-      };
-      fetchWorkitems();
-    }, []
-  )
+  const fetchWorkitems = async () => {
+    fetch(server.qidoRoot + "/workitems").then(response => response.json()).then(
+      workitems => {
+        setWorkitems(workitems);
+        setStudies(workitems);
+      }
+    ).catch((error) => {
+      window.location.href = '/api/login';
+    });
+  };
 
   // Called when relevant state/props are updated
   // Watches filters and sort, debounced
@@ -115,7 +110,7 @@ function StudyListRoute(props) {
           if (response.length > 0){
             setStudies(response);
           } else {
-            setStudies(workitems);
+            fetchWorkitems();
           }
           setSearchStatus({ error: null, isSearchingForStudies: false });
         } catch (error) {
