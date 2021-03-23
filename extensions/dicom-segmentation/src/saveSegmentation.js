@@ -190,7 +190,7 @@ function generateSegmentation(images, inputLabelmaps3D, userOptions = {}) {
   }
 
   segmentation.bitPackPixelData();
-
+  segmentation.dataset.SegmentsOverlap = "NO";
   return segmentation.dataset;
 
 }
