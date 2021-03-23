@@ -72,13 +72,13 @@ const SegmentItem = ({
             >
               <span>{label}</span>
             </ReactTooltip>
-            <Icon
+            {false && <Icon
               className={`eye-icon ${isVisible && '--visible'}`}
               name={isVisible ? 'eye' : 'eye-closed'}
               width="20px"
               height="20px"
               onClick={onVisibilityChangeHandler}
-            />
+            />}
           </div>
           {false && <div className="segment-info">{'...'}</div>}
           {false && <div className="segment-actions">

@@ -62,6 +62,8 @@ const SegmentationPanel = ({
    * TODO: wrap get/set interactions with the cornerstoneTools
    * store with context to make these kind of things less blurry.
    */
+
+  cornerstoneTools.getModule('segmentation').configuration = window.config.segmentationConfiguration;
   const { configuration } = cornerstoneTools.getModule('segmentation');
   const DEFAULT_BRUSH_RADIUS = configuration.radius || 10;
 
@@ -813,13 +815,13 @@ const SegmentsSection = ({
             height="20px"
             onClick={onAddSegmentHandler}
           />}
-          <Icon
+          {false && <Icon
             className={`eye-icon ${isVisible && 'expanded'}`}
             name={isVisible ? 'eye' : 'eye-closed'}
             width="20px"
             height="20px"
             onClick={onVisibilityChangeHandler}
-          />
+          />}
           <div className="count">{count}</div>
         </div>
       </div>
