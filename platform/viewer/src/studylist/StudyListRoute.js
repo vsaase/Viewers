@@ -80,10 +80,12 @@ function StudyListRoute(props) {
   }
 
   const fetchWorkitems = async () => {
+    setSearchStatus({ error: null, isSearchingForStudies: true });
     fetch(server.qidoRoot + "/workitems").then(response => response.json()).then(
       workitems => {
         setWorkitems(workitems);
         setStudies(workitems);
+        setSearchStatus({ error: null, isSearchingForStudies: false });
       }
     ).catch((error) => {
       window.location.href = '/api/login';
@@ -107,12 +109,12 @@ function StudyListRoute(props) {
             displaySize
           );
 
+          setSearchStatus({ error: null, isSearchingForStudies: false });
           if (response.length > 0){
             setStudies(response);
           } else {
             fetchWorkitems();
           }
-          setSearchStatus({ error: null, isSearchingForStudies: false });
         } catch (error) {
           console.warn(error);
           setSearchStatus({ error: true, isFetching: false });
