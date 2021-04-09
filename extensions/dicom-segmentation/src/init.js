@@ -7,8 +7,8 @@ import DICOMSegTempCrosshairsTool from './tools/DICOMSegTempCrosshairsTool';
  * @param {Object|Array} configuration.csToolsConfig
  */
 export default function init({ servicesManager, configuration = {} }) {
-  const { FreehandScissorsTool, BrushTool, SphericalBrushTool, CorrectionScissorsTool } = csTools;
-  const tools = [FreehandScissorsTool, BrushTool, SphericalBrushTool, CorrectionScissorsTool];
+  const { FreehandScissorsTool, BrushTool, SphericalBrushTool, CorrectionScissorsTool, InterpolationTool } = csTools;
+  const tools = [FreehandScissorsTool, BrushTool, SphericalBrushTool, CorrectionScissorsTool, InterpolationTool];
 
   tools.forEach(tool => csTools.addTool(tool));
 

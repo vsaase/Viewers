@@ -68,6 +68,15 @@ const definitions =  [
         commandName: 'setToolActive',
         commandOptions: { toolName: 'FreehandScissorsEraser' },
       },
+      {
+        id: 'Interpolation',
+        label: 'Interpolation',
+        icon: 'cube',
+        //
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Interpolation' },
+      },
     ],
   },
 ];

@@ -32,7 +32,7 @@
   },
   "peerDependencies": {
     "cornerstone-core": "2.3.0",
-    "cornerstone-tools": "vsaase/cornerstoneTools#vsaase_segmentationlag",
+    "cornerstone-tools": "vsaase/cornerstoneTools",
     "cornerstone-wado-image-loader": "3.3.1",
     "dicom-parser": "^1.8.3"
   },
