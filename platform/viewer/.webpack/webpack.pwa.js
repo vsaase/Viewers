@@ -20,6 +20,7 @@ const extractStyleChunksRule = require('./rules/extractStyleChunks.js');
 const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
 const PUBLIC_DIR = path.join(__dirname, '../public');
+const CORNERSTONETOOLSITK_DIR = path.join(__dirname, '../../../node_modules/cornerstone-tools/dist/itk');
 // ~~ Env Vars
 const HTML_TEMPLATE = process.env.HTML_TEMPLATE || 'index.html';
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
@@ -71,6 +72,10 @@ module.exports = (env, argv) => {
           from: `${PUBLIC_DIR}/${APP_CONFIG}`,
           to: `${DIST_DIR}/app-config.js`,
         },
+        {
+          from: `${CORNERSTONETOOLSITK_DIR}`,
+          to: `${DIST_DIR}/assets/itk`
+        }
       ]),
       // https://github.com/faceyspacey/extract-css-chunks-webpack-plugin#webpack-4-standalone-installation
       new ExtractCssChunksPlugin({
