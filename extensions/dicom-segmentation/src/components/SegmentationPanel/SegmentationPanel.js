@@ -162,9 +162,7 @@ const SegmentationPanel = ({
     const brushStackState = getBrushStackState();
     brushStackState.activeLabelmapIndex = newLabelmapIndex;
 
-    state.selectedSegmentation = selectedSegmentation;
-    refreshSegmentations();
-    refreshViewports();
+    setState(state => ({ ...state, selectedSegment: segmentIndex }));
 
     return segmentIndex;
   };
@@ -202,11 +200,12 @@ const SegmentationPanel = ({
      * Need to iterate cornerstone-tools tracked enabled elements?
      * Then only care about the one tied to active viewport?
      */
-    cornerstoneTools.store.state.enabledElements.forEach(enabledElement =>
-      enabledElement.addEventListener(
-        cornerstoneTools.EVENTS.LABELMAP_MODIFIED,
-        labelmapModifiedHandler
-      )
+    cornerstoneTools.store.state.enabledElements.forEach(enabledElement => {
+        enabledElement.addEventListener(
+          cornerstoneTools.EVENTS.LABELMAP_MODIFIED,
+          labelmapModifiedHandler
+        );
+      }
     );
 
     return () => {
@@ -224,6 +223,7 @@ const SegmentationPanel = ({
   }, [activeIndex, viewports]);
 
   const refreshSegmentations = () => {
+    console.log("refreshing");
     const activeViewport = getActiveViewport();
     const isDisabled = !activeViewport || !activeViewport.StudyInstanceUID;
     if (!isDisabled) {
@@ -263,6 +263,7 @@ const SegmentationPanel = ({
     activeIndex,
     isOpen,
     state.selectedSegmentation,
+    state.selectedSegment,
     activeContexts,
     state.isLoading,
   ]);
@@ -323,12 +324,6 @@ const SegmentationPanel = ({
   const setCurrentSelectedSegment = segmentNumber => {
     setActiveSegment(segmentNumber);
 
-    const sameSegment = state.selectedSegment === segmentNumber;
-    if (!sameSegment) {
-      state.selectedSegment = segmentNumber;
-      refreshSegmentations();
-    }
-
     const validIndexList = [];
     getActiveLabelMaps2D().forEach((labelMap2D, index) => {
       if (labelMap2D.segmentsOnLabelmap.includes(segmentNumber)) {
@@ -375,7 +370,7 @@ const SegmentationPanel = ({
         SOPInstanceUID,
         frameIndex,
         activeViewportIndex: activeIndex,
-        });
+      });
     }
 
     if (isVTK()) {
