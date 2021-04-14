@@ -344,7 +344,7 @@ const SegmentationPanel = ({
         return Math.abs(curr - average) < Math.abs(prev - average) ? curr : prev;
       });
     } else {
-      var closest = 0;
+      return;
     }
 
     if (isCornerstone()) {
@@ -375,7 +375,7 @@ const SegmentationPanel = ({
         SOPInstanceUID,
         frameIndex,
         activeViewportIndex: activeIndex,
-      });
+        });
     }
 
     if (isVTK()) {
