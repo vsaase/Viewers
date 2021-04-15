@@ -6037,10 +6037,8 @@ cornerstone-tools@vsaase/cornerstoneTools:
   dependencies:
     "@babel/runtime" "7.1.2"
     cornerstone-math "0.1.7"
-    fs-extra "^7.0.1"
-    itk "^14.0.2"
 
-cornerstone-wado-image-loader@3.3.1:
+cornerstone-wado-image-loader@3.3.1, cornerstone-wado-image-loader@^3.1.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/cornerstone-wado-image-loader/-/cornerstone-wado-image-loader-3.3.1.tgz#2d37a4278f087f9ea66b98dd384c3584bd4f202b"
   integrity sha512-XckOmywvAmFz61G5/FSk+Thd051sU2peiT/EA1nFQ4uatMKKO6xFuOYcr8qB6pmeiQlUnuOVdX5l7GmYbqfT5w==
@@ -15751,10 +15749,10 @@ react-codemirror2@^6.0.0:
   resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-6.0.0.tgz#180065df57a64026026cde569a9708fdf7656525"
   integrity sha512-D7y9qZ05FbUh9blqECaJMdDwKluQiO3A9xB+fssd5jKM7YAXucRuEOlX32mJQumUvHUkHRHqXIPBjm6g0FW0Ag==
 
-react-cornerstone-viewport@4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/react-cornerstone-viewport/-/react-cornerstone-viewport-4.0.4.tgz#0e4291d9b0fe55c003e275175b0902ced61b0c80"
-  integrity sha512-RjCqOtQep04dRoHtsju0USlxN/vGUI2WnEt1aN84iYU7eZ+AXnwJo1nAd0RMX2obcXaGCIqMDtMRkE/zm3oZHw==
+react-cornerstone-viewport@4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/react-cornerstone-viewport/-/react-cornerstone-viewport-4.0.5.tgz#3de83cdd3643980e0330f3743f631dbbb24d98a7"
+  integrity sha512-uamDtFljWWEHe26kOBJJ1Bu//6hAgEra7BDVykOvtMC/W7kW34Q2fFX3ZwkL6TDdCQ94O6K98IXPS9HbrEJWYg==
   dependencies:
     classnames "^2.2.6"
     date-fns "^2.2.1"

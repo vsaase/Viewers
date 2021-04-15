@@ -769,7 +769,7 @@ const _getReferencedSegDisplaysets = (StudyInstanceUID, SeriesInstanceUID) => {
   referencedDisplaysets.sort((a, b) => {
     const aNumber = Number(`${a.SeriesDate}${a.SeriesTime}`);
     const bNumber = Number(`${b.SeriesDate}${b.SeriesTime}`);
-    return aNumber - bNumber;
+    return bNumber - aNumber;
   });
 
   return referencedDisplaysets;
